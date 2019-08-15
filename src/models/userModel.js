@@ -31,4 +31,12 @@ let UserSchema = new Schema({
     
     
 })
+UserSchema.statics = {
+    createNew(item) {
+        return this.create(item) // create có sẵn trong moongoose tạo bản ghi mới
+    },
+    findByEmail(email) { // tra ve Promise
+return this.findOne({'local.email': email}).exec() // exec thuc thi
+    }
+}
 module.exports = mongoose.model('user', UserSchema) // user để số it khi tạo bảng dữ liệu nó sẽ tự thêm s
