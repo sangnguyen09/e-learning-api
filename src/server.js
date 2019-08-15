@@ -1,27 +1,22 @@
 import express from 'express';
 import ConnectDB from './config/connectDB'
-import ContactModel from './models/contact.model'
-
+import configViewEngine from './config/viewEngine'
 
 let app = express();
 
 // connect to MongoDb
 ConnectDB()
 
-app.get('/test-database', async (req,res)=>{ // thằng mongoose sẽ trả về một Promise nên dùng async await để xử lý bất đồng bộ
-    try {
-        let item ={
-            userId :"34234",
-            contactId :"4234342"
-        };
-        let contact = await  ContactModel.createNew(item);
-        res.send(contact)
-    } catch (error) {
-        console.log(error)
-    }
-})
+// config view engine
+configViewEngine(app);
 
+app.get('/', (req,res)=>{  
+   return res.render("main/master") // been file cau hình đã định nghĩa đường dẫn src/view
+})
+app.get('/login-register', (req,res)=>{  
+    return res.render("auth/loginRegister");
+ })
 app.listen(process.env.APP_PORT,process.env.APP_HOST, ()=>{
-    console.log(`Hello, running at ${hostname}:${port}/`)
+    console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
 })
 
