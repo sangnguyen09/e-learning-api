@@ -12,4 +12,10 @@ let ContactSchema = new Schema({
     
     
 })
+
+ContactSchema.statics = {
+    createNew(item) {
+        return this.create(item) // create có sẵn trong moongoose tạo bản ghi mới
+    }
+}
 module.exports = mongoose.model('contact', ContactSchema) // contact để số it khi tạo bảng dữ liệu nó sẽ tự thêm s
