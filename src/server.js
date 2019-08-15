@@ -8,9 +8,6 @@ let app = express();
 // connect to MongoDb
 ConnectDB()
 
-let hostname ='localhost';
-let port = 8017;
-
 app.get('/test-database', async (req,res)=>{ // thằng mongoose sẽ trả về một Promise nên dùng async await để xử lý bất đồng bộ
     try {
         let item ={
@@ -24,7 +21,7 @@ app.get('/test-database', async (req,res)=>{ // thằng mongoose sẽ trả về
     }
 })
 
-app.listen(port,hostname, ()=>{
+app.listen(process.env.APP_PORT,process.env.APP_HOST, ()=>{
     console.log(`Hello, running at ${hostname}:${port}/`)
 })
 
