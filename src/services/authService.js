@@ -4,6 +4,7 @@ import uuidv4 from "uuid/v4"; //tạo verifytoken
 import { transErrors, transSuccess, transMail } from "../../lang/vi";
 import sendMail from "./../config/mailer";
 
+
 let saltRounds = 7;
 
 let register = (email, gender, password, protocol, host) => {
