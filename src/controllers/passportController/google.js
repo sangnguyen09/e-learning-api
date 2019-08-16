@@ -1,40 +1,41 @@
 import passport from "passport";
-import passportFacebook from "passport-facebook"; // kiêm tra đang nhập
+import passportGoogle from "passport-google-oauth"; // kiêm tra đang nhập
 import UserModel from '../../models/userModel'
 import { transErrors, transSuccess } from "../../../lang/vi";
 
-let facebookStratery = passportFacebook.Strategy;
-let fbAppId = process.env.FB_APP_ID
-let fbAppSecret = process.env.FB_APP_SECRET
-let fbAppCallback = process.env.FB_APP_CALLBACK_URL
+let GoogleStratery = passportGoogle.OAuth2Strategy;
+let ggAppId = process.env.GG_APP_ID
+let ggAppSecret = process.env.GG_APP_SECRET
+let ggAppCallback = process.env.GG_APP_CALLBACK_URL
 /**
- * Valid user account type: facebook
+ * Valid user account type: Google
  */
 
- let initPassportFacebook =() =>{
-     passport.use(new facebookStratery({
-        clientID: fbAppId,
-        clientSecret:fbAppSecret,
-        callbackURL:fbAppCallback,
-        profileFields:['email','gender', 'displayName'],
+ let initPassportGoogle =() =>{
+     passport.use(new GoogleStratery({
+        clientID: ggAppId,
+        clientSecret:ggAppSecret,
+        callbackURL:ggAppCallback,
          passReqToCallback: true // goi ham callback
-     }, async (req, accessToken, refeshToken,profile, done)=>{ // de dung tham so
+     }, async (req, accessToken, refeshToken,profile, done)=>{ // de dung thu tu tham so
         try {
-            let user = await UserModel.findByFacebookUid(profile.id)
+            let user = await UserModel.findByGoogleUid(profile.id)
             if (user) {
                 return done(null, user, req.flash('success', transSuccess.loginSuccess(user.username)))
             }
+            console.log(profile)
             let newUserItem ={
                 username : profile.displayName,
                 gender: profile.gender,
                 local:{isActive:true},
-                facebook:{
+                google:{
                     uid:profile.id,
                     token:accessToken,
                     email:profile.emails[0].value
                 }
             };
             let newUser = await UserModel.createNew(newUserItem)
+
             return done(null, newUser, req.flash('success', transSuccess.loginSuccess(newUser.username)))
         } catch (error) {
             return done(null, false, req.flash("errors", transErrors.server_error))
@@ -55,5 +56,5 @@ let fbAppCallback = process.env.FB_APP_CALLBACK_URL
         });
      })
  }
- module.exports = initPassportFacebook;
+ module.exports = initPassportGoogle;
  

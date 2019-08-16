@@ -1,35 +1,73 @@
 import mongoose from "mongoose";
-import { verify } from "crypto";
+import {
+  verify
+} from "crypto";
 import bcrypt from 'bcrypt'
 
 let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
   username: String,
-  gender: { type: String, default: "male" },
-  phone: { type: Number, default: null },
-  address: { type: String, default: null },
-  avatar: { type: String, default: "avatar.png" },
-  role: { type: String, default: "user" },
+  gender: {
+    type: String,
+    default: "male"
+  },
+  phone: {
+    type: Number,
+    default: null
+  },
+  address: {
+    type: String,
+    default: null
+  },
+  avatar: {
+    type: String,
+    default: "avatar.png"
+  },
+  role: {
+    type: String,
+    default: "user"
+  },
   local: {
-    email: { type: String, trim: true },
+    email: {
+      type: String,
+      trim: true
+    },
     password: String,
-    isActive: { type: Boolean, default: false },
+    isActive: {
+      type: Boolean,
+      default: false
+    },
     verifyToken: String
   },
   facebook: {
     uid: String,
     token: String,
-    email: { type: String, trim: true }
+    email: {
+      type: String,
+      trim: true
+    }
   },
   google: {
     uid: String,
     token: String,
-    email: { type: String, trim: true } // trim là ko có khoảng trắng
+    email: {
+      type: String,
+      trim: true
+    } // trim là ko có khoảng trắng
   },
-  createdAt: { type: Number, default: Date.now },
-  updatedAt: { type: Number, default: null },
-  deletedAt: { type: Number, default: null }
+  createdAt: {
+    type: Number,
+    default: Date.now
+  },
+  updatedAt: {
+    type: Number,
+    default: null
+  },
+  deletedAt: {
+    type: Number,
+    default: null
+  }
 });
 UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chúng ta tìm ra các bản ghi
   createNew(item) {
@@ -37,33 +75,44 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
   },
   findByEmail(email) {
     // tra ve Promise
-    return this.findOne({ "local.email": email }).exec(); // exec thuc thi
+    return this.findOne({
+      "local.email": email
+    }).exec(); // exec thuc thi
   },
   removeById(id) {
-	  return this.findByIdAndRemove(id).exec()
+    return this.findByIdAndRemove(id).exec()
   },
-  findByToken(token){
-	return this.findOne({ "local.verifyToken": token }).exec();
+  findByToken(token) {
+    return this.findOne({
+      "local.verifyToken": token
+    }).exec();
   },
   verify(token) {
-		return this.findOneAndUpdate(
-			{'local.verifyToken': token},
-			{
-				'local.isActive':true,'local.verifyToken':null
-			}
-		).exec()
+    return this.findOneAndUpdate({
+      'local.verifyToken': token
+    }, {
+      'local.isActive': true,
+      'local.verifyToken': null
+    }).exec()
   },
   findUserById(id) {
-	return this.findById(id).exec()
-},
+    return this.findById(id).exec()
+  },
   findByFacebookUid(uid) {
-	return this.findOne({ "facebook.uid": uid }).exec();
-},
+    return this.findOne({
+      "facebook.uid": uid
+    }).exec();
+  },
+  findByGoogleUid(uid) {
+    return this.findOne({
+      "google.uid": uid
+    }).exec();
+  },
 };
-UserSchema.methods ={// khi tìm thấy bản ghi rồi thì sẽ sử dụng các method bên trong bản ghi đó
-	// retun Promise has result true/false
-	comparePassword (password) {
-		return bcrypt.compare(password,this.local.password);//this.local.password la mat khau co trong CSDL khi tim thay user trùng email ,password là mat khau ng dung nhap vao form
-	}
+UserSchema.methods = { // khi tìm thấy bản ghi rồi thì sẽ sử dụng các method bên trong bản ghi đó
+  // retun Promise has result true/false
+  comparePassword(password) {
+    return bcrypt.compare(password, this.local.password); //this.local.password la mat khau co trong CSDL khi tim thay user trùng email ,password là mat khau ng dung nhap vao form
+  }
 }
 module.exports = mongoose.model("user", UserSchema); // user để số it khi tạo bảng dữ liệu nó sẽ tự thêm s
