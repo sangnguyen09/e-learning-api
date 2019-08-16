@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { verify } from "crypto";
+import bcrypt from 'bcrypt'
 
 let Schema = mongoose.Schema;
 
@@ -30,7 +31,7 @@ let UserSchema = new Schema({
   updatedAt: { type: Number, default: null },
   deletedAt: { type: Number, default: null }
 });
-UserSchema.statics = {
+UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chúng ta tìm ra các bản ghi
   createNew(item) {
     return this.create(item); // create có sẵn trong moongoose tạo bản ghi mới
   },
@@ -51,6 +52,15 @@ UserSchema.statics = {
 				'local.isActive':true,'local.verifyToken':null
 			}
 		).exec()
-  }
+  },
+  findUserById(id) {
+	return this.findById(id).exec()
+},
 };
+UserSchema.methods ={// khi tìm thấy bản ghi rồi thì sẽ sử dụng các method bên trong bản ghi đó
+	// retun Promise has result true/false
+	comparePassword (password) {
+		return bcrypt.compare(password,this.local.password);//this.local.password la mat khau co trong CSDL khi tim thay user trùng email ,password là mat khau ng dung nhap vao form
+	}
+}
 module.exports = mongoose.model("user", UserSchema); // user để số it khi tạo bảng dữ liệu nó sẽ tự thêm s

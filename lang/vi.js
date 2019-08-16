@@ -8,13 +8,18 @@ export const transErrors ={
     account_in_use :"Email này đã được sử dụng",
     account_remove:"Tài khoản này đã bị gỡ khỏi hệ thống",
     account_not_active :"Email này đã đăng ký nhưng chưa được active, vui lòng kiểm tra email",
-    token_undifined: 'Token không tồn tại !'
+    token_undifined: 'Token không tồn tại !',
+    login_failed: "Sai tài khoản hoặc mật khẩu !",
+    server_error: "Có lỗi ở phía server, vui lòng thông báo bộ phận của chúng tôi về lỗi này!"
 }
 export const transSuccess = {
     userCreated: (userEmail) =>{
         return ` Tài khoản <strong>${userEmail} </strong> đã được tạo, vui lòng kiểm tra email để active tài khoản.`
     },
-    account_actived: "Kích hoạt tài khoản thành công bạn có thể đăng nhập vào ứng dụng"
+    account_actived: "Kích hoạt tài khoản thành công bạn có thể đăng nhập vào ứng dụng",
+    loginSuccess : (username) =>{
+        return `Xin chào ${username}, chúc một ngày tốt lành!`
+    }
 }
 export const transMail ={
     subject : "Awesome Chat: Xác nhận kích hoạt tài khoản",

@@ -5,7 +5,7 @@ import initRoutes from './routes/web'
 import bodyParser  from "body-parser"; // dungf lay param tu request
 import connectFlash  from 'connect-flash';
 import configSession from './config/session'
-
+import passport from "passport";
 let app = express();
 
 // connect to MongoDb
@@ -21,6 +21,10 @@ configViewEngine(app);
 app.use(bodyParser.urlencoded({extended: true}));
 // Enable flash messages
 app.use(connectFlash())
+
+// config passport js
+app.use(passport.initialize());
+app.use(passport.session());
 
 // init routes
 initRoutes(app)
