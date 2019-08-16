@@ -3,9 +3,11 @@ import { auth, home } from "./../controllers/index";
 import {authValid} from './../validation/index'
 import passport from 'passport'
 import initPassportLocal from '../controllers/passportController/local'
+import initPassportFacebook from '../controllers/passportController/facebook'
 
-// init passport local
+// init passport local,facebook
 initPassportLocal()
+initPassportFacebook()
 
 let router = express.Router();
 
@@ -26,6 +28,11 @@ let initROutes = app => {
     successFlash: true,
     failureFlash: true
   }))
+  router.get('/auth/facebook', passport.authenticate("facebook",{scope:['email']}));
+  router.get('/auth/facebook/callback', passport.authenticate("facebook",{
+    successRedirect:'/',
+    failureRedirect:"/login-register",
+  }));
 
   router.get("/",auth.checkLoggedIn, home.getHome);
   router.get('/logout',auth.checkLoggedIn, auth.getLogout)
