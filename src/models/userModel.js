@@ -22,7 +22,7 @@ let UserSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: "avatar.png"
+    default: "avatar-default.jpg"
   },
   role: {
     type: String,
