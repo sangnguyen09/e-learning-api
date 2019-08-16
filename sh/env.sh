@@ -9,3 +9,9 @@ export DB_PASSWORD=''
 # config app environment variable
 export APP_HOST=localhost
 export APP_PORT=8017
+
+#config admin email account
+export MAIL_USER=nguyenthanhsang7817@gmail.com
+export MAIL_PASSWORD=Bossvasen1323@sang
+export MAIL_HOST=smtp.gmail.com
+export MAIL_PORT=587
