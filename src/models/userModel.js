@@ -56,6 +56,9 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
   findUserById(id) {
 	return this.findById(id).exec()
 },
+  findByFacebookUid(uid) {
+	return this.findOne({ "facebook.uid": uid }).exec();
+},
 };
 UserSchema.methods ={// khi tìm thấy bản ghi rồi thì sẽ sử dụng các method bên trong bản ghi đó
 	// retun Promise has result true/false
