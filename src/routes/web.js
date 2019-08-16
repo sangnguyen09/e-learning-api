@@ -13,7 +13,7 @@ let initROutes = app => {
   router.get("/", home.getHome);
   router.get("/login-register", auth.getLoginRegister);
   router.post("/register",authValid.register, auth.postRegister)// validate truowcs khi post du lieu leen
-
+  router.get("/verify/:token", auth.verifyAccount);
   return app.use("/", router);
 };
 

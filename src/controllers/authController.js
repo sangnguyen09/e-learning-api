@@ -27,7 +27,7 @@ let postRegister = async (req, res) => {
   }
   // thanh cong luu bao CSDL
   try {
-   let createUserSuccess =  await auth.register(req.body.email, req.body.gender,req.body.password) // de thuc hien duoc dang ki thi cần đợi cho service kiểm tra tônf tại của email sau đó nó sé trả về Promise để ở đây sử dụng dc async await
+   let createUserSuccess =  await auth.register(req.body.email, req.body.gender,req.body.password, req.protocol, req.get("host")) // de thuc hien duoc dang ki thi cần đợi cho service kiểm tra tônf tại của email sau đó nó sé trả về Promise để ở đây sử dụng dc async await
       successArr.push(createUserSuccess)
       req.flash("success", successArr);
       return res.redirect("/login-register");
@@ -38,4 +38,18 @@ let postRegister = async (req, res) => {
   }
 };
 
-module.exports = { getLoginRegister, getLogut, postRegister };
+let verifyAccount = async (req, res)=>{
+  let errorArr = [];
+  let successArr = [];
+    try {
+      let verifySuccess= await auth.verifyAccount(req.params.token)
+      successArr.push(verifySuccess)
+       req.flash("success",successArr) 
+       return res.redirect("/login-register");
+    } catch (error) {
+      errorArr.push(error)
+      req.flash("errors", errorArr);
+      return res.redirect("/login-register");
+    }
+}
+module.exports = { getLoginRegister, getLogut, postRegister ,verifyAccount };
