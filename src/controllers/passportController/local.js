@@ -37,6 +37,7 @@ let localStratery = passportLocal.Strategy;
      passport.serializeUser((user, done)=>{
         done(null, user._id)
      })
+     // ham nay duoc goi boi passport.session() , return userinfo to req.user
      passport.deserializeUser((id, done)=>{ // lay user tu session, duoc khai bao tu file server.js
         UserModel.findUserById(id)
         .then((user) => {
