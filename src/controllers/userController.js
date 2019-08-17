@@ -11,6 +11,11 @@ import {
     user
 } from '../services';
 import fsExtra from 'fs-extra' // xu ly file ho tro bat dong bo
+import { validationResult } from "express-validator/check";
+
+
+
+
 
 let storageAvatar = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -54,7 +59,7 @@ let updateAvatar = (req, res) => {
             // renmove avatar old
             await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`)
             let result = {
-                message: transSuccess.avatar_updated,
+                message: transSuccess.user_info_updated,
                 imageSrc: `/images/users/${req.file.filename}`
             }
             return res.status(200).send(result)
@@ -64,6 +69,32 @@ let updateAvatar = (req, res) => {
         }
     })
 }
+
+let updateInfo = async (req, res) =>{
+    try {
+        let errorArr = [];
+        let validationErrors = validationResult(req);
+        if (!validationErrors.isEmpty()) {
+          let errors = Object.values(validationErrors.mapped()); // laay gia tri cua object gan vao mot cai mang
+          errors.map(item => {
+            errorArr = [...errorArr, item.msg]; // dung push vao mang
+          });
+      
+          return res.status(500).send(errorArr);
+        }
+
+        let updateUserItem = req.body
+         // update user
+        await user.updateUser(req.user._id, updateUserItem)
+         let result = {
+            message: transSuccess.user_info_updated,
+        }
+         return res.status(200).send(result)
+    } catch (error) {
+        return res.status(500).send(error)
+    }
+}
 module.exports = {
-    updateAvatar
+    updateAvatar,
+    updateInfo
 }

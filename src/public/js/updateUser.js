@@ -1,6 +1,7 @@
  let userAvatar = null;
  let userInfo = {};
  let originAvatarSrc = null
+ let originUserInfo ={}
 
  function updateUserInfo() {
      $("#input-change-avatar").bind('change', function () {
@@ -42,27 +43,133 @@
          }
      })
      $('#input-change-username').bind('change', function () {
-         userInfo.username = $(this).val()
+         let username =$(this).val();
+         let regexUsername = new RegExp("^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$")
+            if (!regexUsername.test(username ) || username.length <3 || username.length >17) {
+                alertify.notify("Username giới hạn trong khoảng 3-17 kí tự và không được chứa kí tự đặc biệt.", "error",7)
+                $(this).val(originUserInfo.username);
+                delete userInfo.username
+                return
+            }
+         
+         userInfo.username = username
      })
      $('#input-change-gender-male').bind('click', function () {
-         userInfo.gender = $(this).val()
+        let gender =$(this).val();
+        if (gender !== 'male') {
+            alertify.notify("Oops! Dữ liệu giới tính có vấn đề , bạn là hacker chăng?", "error",7)
+            $(this).val(originUserInfo.gender);
+            delete userInfo.gender
+            return
+        }
+       
+         userInfo.gender = gender
      })
 
      $('#input-change-gender-female').bind('click', function () {
-         userInfo.gender = $(this).val()
+        let gender =$(this).val();
+        if (gender !== 'female') {
+            alertify.notify("Oops! Dữ liệu giới tính có vấn đề , bạn là hacker chăng?", "error",7)
+            $(this).val(originUserInfo.gender);
+            delete userInfo.gender
+            return
+        }
+       
+         userInfo.gender = gender
      })
      $('#input-change-phone').bind('change', function () {
-         userInfo.phone = $(this).val()
+        let phone = $(this).val();
+        console.log(phone)
+        let regexPhone= /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/
+        if (!regexPhone.test(phone)) {
+            alertify.notify("Số điện thoại Việt Nam bao gồm 10 kí tự số.", "error",7)
+            $(this).val(originUserInfo.phone);
+            delete userInfo.phone
+            return
+        }
+         userInfo.phone = phone
      })
      $('#input-change-address').bind('change', function () {
-         userInfo.address = $(this).val()
+        let address =$(this).val();
+
+        if (address.length <3 || address.length >30) {
+            alertify.notify("Địa chỉ giới hạn trong khoảng 3-30 kí tự", "error",7)
+            $(this).val(originUserInfo.address);
+            delete userInfo.address
+            return
+        }
+         userInfo.address = address
      })
  }
+function callUpdateUserAvatar() {
+    $.ajax({
+        url: '/user/update-avatar',
+        type: 'put',
+        cache: false,
+        contentType: false,
+        processData: false,
+        data: userAvatar,
+        success: function (result) {
+                  // Display success
+                  $('.user-modal-alert-success').find('span').text(result.message)
+                  $('.user-modal-alert-success').css('display', "block")
 
+                  // update avatar tai thanh n
+                  $('#navbar-avatar').attr('src',result.imageSrc)
+
+                  // update origin avatar src
+                  originAvatarSrc =result.imageSrc
+                  //reset all
+                  $('#input-btn-cancle-update-user').click()
+        },
+        error: function (err) {
+            // Display errors
+            $('.user-modal-alert-error').find('span').text(err.responseText)
+            $('.user-modal-alert-error').css('display', "block")
+
+             //reset all
+            $('#input-btn-cancle-update-user').click()
+        }
+    })
+}
+function callUpdateUserInfo() {
+    $.ajax({
+        url: '/user/update-info',
+        type: 'put',
+        data: userInfo,
+        success: function (result) {
+                  // Display success
+                  $('.user-modal-alert-success').find('span').text(result.message)
+                  $('.user-modal-alert-success').css('display', "block")
+
+                  originUserInfo =Object.assign(originUserInfo, userInfo)
+                  // update user name navbar
+                  $('#navbar_username').text(originUserInfo.username)
+
+                  //reset all
+                  $('#input-btn-cancle-update-user').click()
+        },
+        error: function (err) {
+            // Display errors
+            $('.user-modal-alert-error').find('span').text(err.responseText)
+            $('.user-modal-alert-error').css('display', "block")
+
+             //reset all
+            $('#input-btn-cancle-update-user').click()
+        }
+    })
+}
  $(document).ready(function () {
-     updateUserInfo();
+     originUserInfo ={
+         username:$('#input-change-username').val(),
+         gender: ($('#input-change-gender-male').is(":checked") )?  $('#input-change-gender-male').val() : $('#input-change-gender-female').val(),
+         address:$('#input-change-address').val(),
+         phone:$('#input-change-phone').val(),
+     }
      originAvatarSrc = $('#user-modal-avatar').attr('src');
 
+     // update user info sau khi thay đổi các giá tr
+     updateUserInfo();
     
      $('#input-btn-update-user').bind('click', function () {
          if ($.isEmptyObject(userInfo) && !userAvatar) {
@@ -70,39 +177,9 @@
              return
          }
          // goij toi api bang ajax
-         $.ajax({
-             url: '/user/update-avatar',
-             type: 'put',
-             cache: false,
-             contentType: false,
-             processData: false,
-             data: userAvatar,
-             success: function (result) {
-                 console.log(result);
-                       // Display success
-                       $('.user-modal-alert-success').find('span').text(result.message)
-                       $('.user-modal-alert-success').css('display', "block")
-
-                       // update avatar tai thanh n
-                       $('#navbar-avatar').attr('src',result.imageSrc)
-
-                       // update origin avatar src
-                       originAvatarSrc =result.imageSrc
-                       //reset all
-                       $('#input-btn-cancle-update-user').click()
-             },
-             error: function (err) {
-                 console.log(err)
-                 // Display errors
-                 $('.user-modal-alert-error').find('span').text(err.responseText)
-                 $('.user-modal-alert-error').css('display', "block")
-
-                  //reset all
-                 $('#input-btn-cancle-update-user').click()
-             }
-         })
-         // console.log(userAvatar); 
-         // console.log(userInfo);
+        userAvatar && callUpdateUserAvatar()
+        
+        !$.isEmptyObject(userInfo) && callUpdateUserInfo()
 
      })
    
@@ -111,5 +188,10 @@
          userInfo = {}
          $("#input-change-avatar").val(null)
          $('#user-modal-avatar').attr('src', originAvatarSrc)
+
+         $('#input-change-username').val(originUserInfo.username);
+         (originUserInfo.gender === "male") ?  $('#input-change-gender-male').click() :  $('#input-change-gender-female').click();
+         $('#input-change-address').val(originUserInfo.address)
+         $('#input-change-phone').val(originUserInfo.phone)
      })
  })
