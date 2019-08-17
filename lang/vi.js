@@ -12,11 +12,13 @@ export const transErrors ={
     account_in_use :"Email này đã được sử dụng",
     account_remove:"Tài khoản này đã bị gỡ khỏi hệ thống",
     account_not_active :"Email này đã đăng ký nhưng chưa được active, vui lòng kiểm tra email",
+    account_undifined :"Tài khoản không tồn t",
     token_undifined: 'Token không tồn tại !',
     login_failed: "Sai tài khoản hoặc mật khẩu !",
     server_error: "Có lỗi ở phía server, vui lòng thông báo bộ phận của chúng tôi về lỗi này!",
     avatar_type: 'Kiểu file không hợp lệ, chỉ chấp nhận jpg & png',
     avatar_size: 'Ảnh upalod tối đa cho phép là 1MB',
+    user_current_password_failed: "Mật khẩu hiện tại không chính xác"
 }
 export const transSuccess = {
     userCreated: (userEmail) =>{
@@ -29,6 +31,7 @@ export const transSuccess = {
     logout_success: "Đăng xuất tài khoản thành công!",
     avatar_updated: " Cập nhật ảnh đại diện thành công",
     user_info_updated: " Cập nhật thông tin thành công",
+    user_password_updated: " Cập nhật mật khẩu thành công",
 }
 export const transMail ={
     subject : "Awesome Chat: Xác nhận kích hoạt tài khoản",
