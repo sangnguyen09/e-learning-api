@@ -19,9 +19,14 @@ configSession(app);
 configViewEngine(app);
 
 // enable post data for request
+app.use(bodyParser.json({limit: '50mb'}));
+
 app.use(bodyParser.urlencoded({
-    extended: true
+    extended: true,
+    limit:'50mb',
+   parameterLimit: 100000
 }));
+
 // Enable flash messages
 app.use(connectFlash())
 

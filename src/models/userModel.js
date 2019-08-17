@@ -108,6 +108,9 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
       "google.uid": uid
     }).exec();
   },
+  updateUser(id,item) { // các hàm update sẽ retun dữ liệu cũ sau khi update
+    return this.findByIdAndUpdate(id, item).exec()
+  }
 };
 UserSchema.methods = { // khi tìm thấy bản ghi rồi thì sẽ sử dụng các method bên trong bản ghi đó
   // retun Promise has result true/false
