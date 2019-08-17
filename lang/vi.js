@@ -3,6 +3,10 @@ export const transValidation ={
     gender_incorrect : "Tại sao trường giới tính lại bị sai",
     password_incorrect : "Mật khẩu phải chứa ít nhất 8 kí tự, bao gồm chữ hoa, chữ thường, chữ số và kí tự đặc biệt",
     password_confirmation_incorrect : "Nhập lại mật khẩu chưa chính xác",
+    update_username:'Username giới hạn trong khoảng 3-17 kí tự và không được chứa kí tự đặc biệt.',
+    update_gender:'Oops! Dữ liệu giới tính có vấn đề , bạn là hacker chăng?',
+    update_address:'Địa chỉ giới hạn trong khoảng 3-30 kí tự',
+    update_phone:'Số điện thoại Việt Nam 10 kí tự số.',
 }
 export const transErrors ={
     account_in_use :"Email này đã được sử dụng",
@@ -23,7 +27,8 @@ export const transSuccess = {
         return `Xin chào ${username}, chúc một ngày tốt lành!`
     },
     logout_success: "Đăng xuất tài khoản thành công!",
-    avatar_updated: " Cập nhật ảnh đại diện thành công"
+    avatar_updated: " Cập nhật ảnh đại diện thành công",
+    user_info_updated: " Cập nhật thông tin thành công",
 }
 export const transMail ={
     subject : "Awesome Chat: Xác nhận kích hoạt tài khoản",
