@@ -28,6 +28,40 @@ ContactSchema.statics = {
                 {'contactId': userId}
             ]
         })
-    } 
+    } ,
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} contactId 
+     */
+    checkExists (userId, contactId) {
+        return this.findOne({
+            $or : [ // kiểm tra 1 trong 2 thằng đã gửi kết bạn rồi thì thằng còn lại ko dc gửi nữa
+                {$and:[
+                    {'userId' : userId},
+                    {'contactId': contactId} // truowngf hợp a đã gửi kết bạn với b
+                ]},
+                {$and:[
+                    {'userId' : contactId},// truowngf hợp b đã gửi kết bạn với a
+                    {'contactId': userId}
+                ]},
+            ]
+        })
+    },
+    
+    /**
+     * 
+     * @param {string} userId 
+     * @param {string} contactId 
+     */
+    removeRequestContact (userId, contactId) {
+        return this.remove({
+            $and:[
+                {'userId' : userId},
+                {'contactId': contactId} 
+            ]
+        })
+    }
+    
 }
 module.exports = mongoose.model('contact', ContactSchema) // contact để số it khi tạo bảng dữ liệu nó sẽ tự thêm s
