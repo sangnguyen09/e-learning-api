@@ -114,6 +114,27 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
   ,
   updatePassword(id,hashedPassword) { // hashedPassword mat khau da dc ma hoa
     return this.findByIdAndUpdate(id, {'local.password':hashedPassword}).exec()
+  },
+  /**
+   * 
+   * @param {arr : mang loai tru user id nay da ket banj} deprecatedUserIds 
+   * @param {key search} keyword 
+   */
+  findAllForAddContact (deprecatedUserIds, keyword) {
+    return this.find({
+        $and:[
+          {"_id":{$nin: deprecatedUserIds}} ,//$nin  không nằm trong 
+          { 'local.isActive': true},
+          {
+            $or:[
+              {'username' :{'$regex': keyword}},
+              {'local.email' :{'$regex': keyword}},
+              {'facebook.email' :{'$regex': keyword}},
+              {'google.email' :{'$regex': keyword}},
+            ]
+          }
+        ]
+    },{_id:1,username:1, address:1, avatar:1}).exec()
   }
 };
 UserSchema.methods = { // khi tìm thấy bản ghi rồi thì sẽ sử dụng các method bên trong bản ghi đó

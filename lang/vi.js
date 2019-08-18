@@ -7,6 +7,7 @@ export const transValidation ={
     update_gender:'Oops! Dữ liệu giới tính có vấn đề , bạn là hacker chăng?',
     update_address:'Địa chỉ giới hạn trong khoảng 3-30 kí tự',
     update_phone:'Số điện thoại Việt Nam 10 kí tự số.',
+    keyword_find_user: 'Chỉ cho phép kí tự chữ cái và số, khoảng trắng '
 }
 export const transErrors ={
     account_in_use :"Email này đã được sử dụng",
