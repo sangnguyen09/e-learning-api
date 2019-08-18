@@ -127,10 +127,10 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
           { 'local.isActive': true},
           {
             $or:[
-              {'username' :{'$regex': keyword}},
-              {'local.email' :{'$regex': keyword}},
-              {'facebook.email' :{'$regex': keyword}},
-              {'google.email' :{'$regex': keyword}},
+              {'username' :{'$regex': new RegExp(keyword, 'i') }}, // i là ko phân biệt chữ hoa chữ thường
+              {'local.email' :{'$regex': new RegExp(keyword, 'i') }},
+              {'facebook.email' :{'$regex': new RegExp(keyword, 'i') }},
+              {'google.email' :{'$regex': new RegExp(keyword, 'i') }},
             ]
           }
         ]

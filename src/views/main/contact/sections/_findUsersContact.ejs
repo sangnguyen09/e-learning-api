@@ -12,14 +12,15 @@
             </div>
             <br>
             <div class="user-address">
-                <span>&nbsp <%= user.address %>.</span>
+                <span>&nbsp <%= user.address %></span>
             </div>
             <div class="user-add-new-contact" data-uid="<%= user._id %>">
                 Thêm vào danh sách liên lạc
             </div>
-            <div class="user-remove-request-sent action-danger" data-uid="<%= user._id %>">
+            <div class="user-remove-request-contact action-danger" data-uid="<%= user._id %>">
                 Hủy yêu cầu
             </div>
+          
         </div>
     </li>
 <% }) %>

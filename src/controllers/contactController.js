@@ -24,7 +24,33 @@ let findUsersContact = async (req, res)=>{
         
     }
 }
+let addNew = async (req, res)=>{
+
+    try {
+        let currentUserId = req.user._id;
+        let contactId = req.body.uid; // uid la data gui len
+
+        let newContact = await contact.addNew(currentUserId, contactId)
+        return res.status(200).send({success: !!newContact})//!!  sẽ có giá trị là true/false
+    } catch (error) {
+        
+    }
+}
+let removeRequestContact = async (req, res)=>{
+
+    try {
+        let currentUserId = req.user._id;
+        let contactId = req.body.uid; // uid la data gui len
+        let removeReq = await contact.removeRequestContact(currentUserId, contactId)
+    
+        return res.status(200).send({success: !!removeReq})//!!  sẽ có giá trị là true/false
+    } catch (error) {
+        
+    }
+}
  
 module.exports = {
   findUsersContact,
+  addNew,
+  removeRequestContact,
 }
