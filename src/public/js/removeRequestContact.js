@@ -24,7 +24,8 @@ function removeRequestContact() {
 
 socket.on("response_remove_request_contact", function(user){
    
-    $(".noti_content").find(`span[data-uid =${user.id}]`).remove();
+    $(".noti_content").find(`div[data-uid =${user.id}]`).remove();// xoa o popup
+    $("ul.list-notifications").find(`li>div[data-uid =${user.id}]`).parent().remove(); // xoa o modal
 
     // xóa ở modal tab yêu cầu kết bạn
 
