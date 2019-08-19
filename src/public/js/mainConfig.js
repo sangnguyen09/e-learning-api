@@ -50,11 +50,11 @@ function enableEmojioneArea(chatId) {
 }
 
 function spinLoaded() {
-  $('#loader').css('display', 'none');
+  $('.main-loader').css('display', 'none');
 }
 
 function spinLoading() {
-  $('#loader').css('display', 'block');
+  $('.main-loader').css('display', 'flex');
 }
 
 function ajaxLoading() {
