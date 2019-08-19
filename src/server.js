@@ -4,31 +4,47 @@ import configViewEngine from './config/viewEngine';
 import initRoutes from './routes/web'
 import bodyParser from "body-parser"; // dungf lay param tu request
 import connectFlash from 'connect-flash';
-import configSession from './config/session'
+import session from './config/session'
 import passport from "passport";
+import http from 'http';
+import socketio from 'socket.io';
+import initSockets from './sockets/index'
 
+import cookieParser from 'cookie-parser'
+import { configSocketIo } from './config/socketio';
+
+// init app
 let app = express();
+
+// innit server with soceketio va express app
+let server = http.createServer(app);
+let io = socketio(server)
 
 // connect to MongoDb
 ConnectDB();
 
 // sau khi ket noi dc mongo thi chay session
-configSession(app);
+session.config(app);
 
 // config view engine
 configViewEngine(app);
 
 // enable post data for request
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({
+    limit: '50mb'
+}));
 
 app.use(bodyParser.urlencoded({
     extended: true,
-    limit:'50mb',
-   parameterLimit: 100000
+    limit: '50mb',
+    parameterLimit: 100000
 }));
 
 // Enable flash messages
 app.use(connectFlash())
+
+// use cookie parser
+app.use(cookieParser())
 
 // config passport js
 app.use(passport.initialize());
@@ -37,8 +53,13 @@ app.use(passport.session());
 // init routes
 initRoutes(app)
 
+// config socketIo session gan session  vào socket để  lấy dc user 
+configSocketIo(io)
 
-app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+// init all sockets
+initSockets(io)
+
+server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
     console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
 })
 
@@ -83,4 +104,3 @@ app.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
 //         console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
 //     })
 // })
-
