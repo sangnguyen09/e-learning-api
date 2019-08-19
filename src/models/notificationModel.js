@@ -46,6 +46,18 @@ NotificationSchema.statics = {
         }).sort({
             'createdAt': -1
         }).limit(limit).exec() // -1 la lay cai moi nhat
+    },
+   
+    countNofifUnread(userId) {
+        return this.count({
+            $and: [{
+                    'receiverId': userId
+                },
+                {
+                    'isRead': false
+                },
+            ]
+        }).exec() // -1 la lay cai moi nhat
     }
 
 }
@@ -58,10 +70,10 @@ export const NOTIFICATION_CONTENTS = {
         if (notificationType === NOTIFICATION_TYPES.ADD_CONTACT) {
             let classReaded = isRead ? '' : ' class="notif-readed-false" '
             return `
-                <span ${classReaded} data-uid="${ userId}">
+                <div ${classReaded} data-uid="${ userId}">
                     <img class="avatar-small" src="images/users/${userAvatar}" alt=""> 
                     <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
-                </span><br><br><br>
+                </div> 
             `
         }
         return "No matching with any notification type"

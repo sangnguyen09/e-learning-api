@@ -1,0 +1,26 @@
+<div class="modal fade" id="notificationModal" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Tất cả thông báo</h4>
+            </div>
+            <div class="modal-body">
+                <a href="javascript:void(0)" class="ml-auto" id="modal-mark-notif-readed"><strong>Đánh dấu tất cả đã
+                        đọc</strong> </a>
+                <hr>
+                <ul class="list-notifications">
+                    <% notifications.map(noti =>{ %>
+                    <li>
+                        <%- noti%>
+                    </li>
+                    <%  }) %>
+
+                    <% if(countNofifUnread > 10) {  %>
+                    li class="text-center pt-4"><button class="btn btn-success">Xem thêm</button></li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
