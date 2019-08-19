@@ -21,7 +21,7 @@ function addContact() {
 
 socket.on("response_new_contact", function(user){
     let notif =`
-        <span data-uid="${ user.id }">
+        <span class="notif-readed-false" data-uid="${ user.id }">
             <img class="avatar-small" src="images/users/${user.avatar}" alt=""> 
             <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết bạn!
         </span><br><br><br>

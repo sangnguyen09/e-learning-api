@@ -1,4 +1,8 @@
 import ContactModel from '../models/contactModel'
+import {
+    NOTIFICATION_TYPES,
+    NotificationModel
+} from '../models//notificationModel'
 import UserMofel from '../models/userModel'
 import _ from 'lodash';
 
@@ -23,22 +27,35 @@ let addNew = (currentUserId, contactId) => {
         if (contactExists) {
             return reject(false)
         }
-
+        // create contact
         let newContactObj = {
             userId: currentUserId,
             contactId: contactId
         }
         let newContact = await ContactModel.createNew(newContactObj)
+        // create notification
+        let notificationItem = {
+            senderId: currentUserId,
+            receiverId: contactId,
+            type: NOTIFICATION_TYPES.ADD_CONTACT
+        }
+
+        await NotificationModel.createNew(notificationItem) // tao  mới notify
+
         resolve(newContact)
     })
 }
 
 let removeRequestContact = (currentUserId, contactId) => {
     return new Promise(async (resolve, reject) => {
-        let removeReq = await ContactModel.removeRequestContact(currentUserId,contactId)
-        if (removeReq.result.n === 0) {//removeReq.result ={n:1,ok:1} ket qủa trả về của việc xóa
+        let removeReq = await ContactModel.removeRequestContact(currentUserId, contactId)
+        if (removeReq.result.n === 0) { //removeReq.result ={n:1,ok:1} ket qủa trả về của việc xóa
             reject(false);
         }
+        // remove notifycation
+        await NotificationModel.removeRequestContactNotification(currentUserId, contactId, NOTIFICATION_TYPES.ADD_CONTACT)
+
+        // tra ve kq cho cliebt
         resolve(removeReq)
     })
 }
