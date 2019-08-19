@@ -10,6 +10,10 @@ export DB_PASSWORD=''
 export APP_HOST=localhost
 export APP_PORT=8017
 
+#config Session 
+export SESSION_KEY=sangnguyen
+export SESSION_SECRET=somechat
+
 #config admin email account
 export MAIL_USER=nguyenthanhsang7817@gmail.com
 export MAIL_PASSWORD=Bossvasen1323@sang

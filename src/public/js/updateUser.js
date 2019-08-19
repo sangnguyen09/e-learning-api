@@ -62,7 +62,6 @@ function callLogOut() {
              let formData = new FormData();
              formData.append('avatar', fileData);
              userAvatar = formData
-             console.log(userAvatar.get('avatar'));
 
          } else {
              alertify.notify("Trình duyệt của bạn không hỗ trợ FileReader", "error", 7)
@@ -105,7 +104,6 @@ function callLogOut() {
      })
      $('#input-change-phone').bind('change', function () {
         let phone = $(this).val();
-        console.log(phone)
         let regexPhone= /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/
         if (!regexPhone.test(phone)) {
             alertify.notify("Số điện thoại Việt Nam bao gồm 10 kí tự số.", "error",7)
