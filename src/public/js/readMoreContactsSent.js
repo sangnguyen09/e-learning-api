@@ -30,12 +30,13 @@ $(document).ready(function () {
                                     <div class="user-address">
                                         <span>&nbsp ${user.address ? user.address : ''}</span>
                                     </div>
-                                    <div class="user-remove-request-sent action-danger" data-uid="${user._id}">
+                                    <div class="user-remove-request-contact-sent d-inline-block action-danger" data-uid="${user._id}">
                                     Hủy yêu cầu
                                 </div>
                                 </div>
                             </li`); // modal
                 })
+                removeRequestContactSent()
                 $('#load_more_contacts_sent').parent().css('display', 'block')
                 $('.lds-ripple').css('display', 'none')
             }, 300);

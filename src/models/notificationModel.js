@@ -21,7 +21,7 @@ NotificationSchema.statics = {
         return this.create(item) // create có sẵn trong moongoose tạo bản ghi mới
     },
 
-    removeRequestContactNotification(senderId, receiverId, type) {
+    removeRequestContactSentNotification(senderId, receiverId, type) {
         return this.remove({
             $and: [{
                     'senderId': senderId
