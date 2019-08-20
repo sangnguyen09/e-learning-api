@@ -4,7 +4,7 @@ import {
 } from "../models/notificationModel";
 import UserModel from "../models/userModel";
 
-const LIMIT_NUMBER_TAKEN =1
+const LIMIT_NUMBER_TAKEN =10
 /**
  * get notification whien f5 page, get 10 item
  */
