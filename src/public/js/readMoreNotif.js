@@ -8,6 +8,8 @@ $(document).ready(function () {
             setTimeout(() => {
                 if (!notifications.length) {
                     alertify.notify("Bạn không còn thông báo nào để xem!", 'error', 7)
+                    $('#load_more_notify').parent().css('display', 'block')
+                    $('.lds-ripple').css('display', 'none')
                     return
                 }
                 notifications.map(function (notification) {

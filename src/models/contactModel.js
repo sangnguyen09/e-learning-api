@@ -137,7 +137,7 @@ ContactSchema.statics = {
             "createAt": -1
         }).limit(limit).exec()
     },
-    countAllContacts(userId ) { // danh sach ban be
+    countAllContacts(userId) { // danh sach ban be
         return this.count({
             $and: [{
                     'status': true
@@ -154,7 +154,7 @@ ContactSchema.statics = {
             ]
         }).exec()
     },
-    countAllContactsSent(userId ) { // danh sachs minh gui yeu cau
+    countAllContactsSent(userId) { // danh sachs minh gui yeu cau
         return this.count({
             $and: [{
                     'status': false
@@ -165,7 +165,7 @@ ContactSchema.statics = {
             ]
         }).exec()
     },
-    countAllContactsReceived(userId ) { // danh sach minh dc gui yeu cau ket ban
+    countAllContactsReceived(userId) { // danh sach minh dc gui yeu cau ket ban
         return this.count({
             $and: [{
                     'status': false
@@ -175,6 +175,52 @@ ContactSchema.statics = {
                 }
             ]
         }).exec()
+    },
+    readMoreContacts(userId, skip, limit) {
+        return this.find({
+            $and: [{
+                    'status': true
+                },
+                {
+                    $or: [{
+                            'userId': userId
+                        },
+                        {
+                            'contactId': userId
+                        },
+                    ]
+                }
+            ]
+        }).sort({
+            "createAt": -1
+        }).skip(skip).limit(limit).exec()
+    },
+    readMoreContactsSent(userId, skip, limit) {
+        return this.find({
+            $and: [{
+                    'status': false
+                },
+                {
+                    'userId': userId
+                }
+            ]
+        }).sort({
+            "createAt": -1
+        }).skip(skip).limit(limit).exec()
+
+    },
+    readMoreContactsReceived(userId, skip, limit) {
+        return this.find({
+            $and: [{
+                    'status': false
+                },
+                {
+                    'contactId': userId
+                }
+            ]
+        }).sort({
+            "createAt": -1
+        }).skip(skip).limit(limit).exec()
     }
 
 }
