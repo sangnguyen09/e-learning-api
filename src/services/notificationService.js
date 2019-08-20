@@ -4,7 +4,7 @@ import {
 } from "../models/notificationModel";
 import UserModel from "../models/userModel";
 
-const LIMIT_NUMBER_TAKEN =10
+const LIMIT_NUMBER_TAKEN =1
 /**
  * get notification whien f5 page, get 10 item
  */
@@ -51,7 +51,23 @@ export const readMore = (currentUserId, skipNumber) => {
 
             resolve(await Promise.all(getNotifContent))
         } catch (error) {
-            reject(error)
+            reject(error);
+        }
+    })
+}
+/**
+ *  danh dau tat ca thong bao la da doc
+ * targetUsers: array
+ */
+//  
+export const markAllAsRead = (currentUserId, targetUsers) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            await NotificationModel.markAllAsRead(currentUserId, targetUsers)
+            resolve(true)
+        } catch (error) {
+            console.log(`Error when mark notifications as read:${error}`);
+            reject(false);
         }
     })
 }

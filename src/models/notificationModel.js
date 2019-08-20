@@ -47,20 +47,20 @@ NotificationSchema.statics = {
             'createdAt': -1
         }).limit(limit).exec() // -1 la lay cai moi nhat
     },
-   /**
-    * 
-    * @param {string} userId 
-    * @param {number} skip 
-    * @param {number} limit 
-    */
-    readMore(userId,skip, limit) {
+    /**
+     * 
+     * @param {string} userId 
+     * @param {number} skip 
+     * @param {number} limit 
+     */
+    readMore(userId, skip, limit) {
         return this.find({
             'receiverId': userId
         }).sort({
             'createdAt': -1
         }).skip(skip).limit(limit).exec() // -1 la lay cai moi nhat
     },
-   
+
     countNofifUnread(userId) {
         return this.count({
             $and: [{
@@ -71,6 +71,27 @@ NotificationSchema.statics = {
                 },
             ]
         }).exec() // -1 la lay cai moi nhat
+    },
+    /**
+     * 
+     * @param {string} userId 
+     * @param {array} targetUsers 
+     */
+    markAllAsRead(userId, targetUsers) {
+        return this.updateMany({
+            $and: [
+                {
+                    'receiverId': userId
+                },
+                {
+                    'senderId': {
+                        $in: targetUsers
+                    }
+                },
+            ]
+        }, {
+            'isRead': true
+        }).exec()
     }
 
 }
