@@ -91,6 +91,22 @@ ContactSchema.statics = {
             ]
         })
     },
+    /**
+     * removeRequestContactReceived
+     * @param {string} userId 
+     * @param {string} contactId 
+     */
+    removeRequestContactReceived(userId, contactId) {
+        return this.remove({
+            $and: [{
+                    'userId': contactId
+                },
+                {
+                    'contactId': userId
+                }
+            ]
+        })
+    },
 
     getContacts(userId, limit) { // danh sach ban be
         return this.find({

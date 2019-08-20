@@ -15,6 +15,7 @@ function removeRequestContactSent() {
 
                     decreaseNumberNotifyContact('count-request-contact-sent')
 
+                    decreaseNumberNotification('noti_contact_counter',1)//js/caculateNotification.js
                     // xóa ở modal tab ddang cho xac nhan
                     $('#request-contact-sent').find(`li[data-uid=${targetId}]`).remove()
                     // Xu ly reatime
