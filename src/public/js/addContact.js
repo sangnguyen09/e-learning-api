@@ -7,6 +7,8 @@ function addContact() {
                  $('#find-user').find(`div.user-add-new-contact[data-uid = ${targetId}]`).hide();
                  $('#find-user').find(`div.user-remove-request-contact-sent.action-danger[data-uid = ${targetId}]`).css('display','inline-block');
 
+                 increaseNumberNotification('noti_contact_counter',1)//js/caculateNotification.js
+
                  increaseNumberNotifyContact('count-request-contact-sent')
 
                  //them o modal yeu cau ket ban
@@ -57,7 +59,7 @@ socket.on("response_new_contact", function(user){
                     <div class="user-acccept-contact-received" data-uid="${user.id}">
                         Chấp nhận
                     </div>
-                    <div class="user-reject-request-contact-received action-danger"
+                    <div class="user-remove-request-contact-received action-danger"
                         data-uid="${user.id}">
                         Xóa yêu cầu
                     </div>
@@ -67,4 +69,6 @@ socket.on("response_new_contact", function(user){
     `
     // them o modal cho xac nhan khi dc gui yeu cau ket ban
     $('#request-contact-received').find('ul').prepend(userInfoHtml)
+
+    removeRequestContactReceived()
 })
