@@ -5,13 +5,15 @@ function addContact() {
         $.post('/contact/add-new', {uid: targetId}, function (data) {
              if (data.success) {
                  $('#find-user').find(`div.user-add-new-contact[data-uid = ${targetId}]`).hide();
-                 $('#find-user').find(`div.user-remove-request-contact.action-danger[data-uid = ${targetId}]`).css('display','inline-block');
+                 $('#find-user').find(`div.user-remove-request-contact-sent.action-danger[data-uid = ${targetId}]`).css('display','inline-block');
 
                  increaseNumberNotifyContact('count-request-contact-sent')
 
                  //them o modal yeu cau ket ban
                  let userInfoHtml = $('#find-user').find(`ul li[data-uid=${targetId}]`).get(0).outerHTML;
                  $('#request-contact-sent').find('ul').prepend(userInfoHtml);
+                 
+                    removeRequestContactSent()
                  // Xu ly reatime socket Io
                 socket.emit('add-new-contact',{contactId:targetId})
              

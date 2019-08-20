@@ -6,7 +6,7 @@ import {
  * @param {*} io from socket.io lib
  */
 
-let removeRequestContact = (io) => {
+let removeRequestContactSent = (io) => {
     let clients = {}
 
     io.on('connection', (socket) => {
@@ -15,7 +15,7 @@ let removeRequestContact = (io) => {
         let currentUserId = socket.request.user._id
       clients = pushSocketIdToArray(clients, currentUserId, socket.id)
 
-        socket.on('remove_request_contact', (data) => { //socket.emit('add-new-contact',{contactId:targetId})
+        socket.on('remove_request_contact-sent', (data) => { //socket.emit('add-new-contact',{contactId:targetId})
 
             let currentUser = {
                 id: socket.request.user._id,
@@ -23,7 +23,7 @@ let removeRequestContact = (io) => {
 
             //chi day thong bao cho nguoi dung dc gui ket ban// khi dang online moi push
             if (clients[data.contactId]) {
-                emitNotifyToArray(clients,data.contactId,io,'response_remove_request_contact',currentUser)
+                emitNotifyToArray(clients,data.contactId,io,'response_remove_request_contact_sent',currentUser)
             }
         });
 
@@ -33,4 +33,4 @@ let removeRequestContact = (io) => {
     })
 }
 
-module.exports = removeRequestContact
+module.exports = removeRequestContactSent

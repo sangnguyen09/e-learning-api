@@ -50,14 +50,14 @@ let addNew = (currentUserId, contactId) => {
     })
 }
 
-let removeRequestContact = (currentUserId, contactId) => {
+let removeRequestContactSent = (currentUserId, contactId) => {
     return new Promise(async (resolve, reject) => {
-        let removeReq = await ContactModel.removeRequestContact(currentUserId, contactId)
+        let removeReq = await ContactModel.removeRequestContactSent(currentUserId, contactId)
         if (removeReq.result.n === 0) { //removeReq.result ={n:1,ok:1} ket qủa trả về của việc xóa
             reject(false);
         }
         // remove notifycation
-        await NotificationModel.removeRequestContactNotification(currentUserId, contactId, NOTIFICATION_TYPES.ADD_CONTACT)
+        await NotificationModel.removeRequestContactSentNotification(currentUserId, contactId, NOTIFICATION_TYPES.ADD_CONTACT)
 
         // tra ve kq cho cliebt
         resolve(removeReq)
@@ -210,7 +210,7 @@ let readMoreContactsReceived = (currentUserId, skipNumberContacts) => {
 module.exports = {
     findUsersContact,
     addNew,
-    removeRequestContact,
+    removeRequestContactSent,
     getContactsReceived,
     getContacts,
     getContactsSent,
