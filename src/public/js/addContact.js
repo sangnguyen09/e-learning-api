@@ -31,6 +31,6 @@ socket.on("response_new_contact", function(user){
 
     increaseNumberNotifyContact('count-request-contact-received')
 
-    increaseNumberNotification('noti_contact_counter')
-    increaseNumberNotification('noti_counter')
+    increaseNumberNotification('noti_contact_counter',1)
+    increaseNumberNotification('noti_counter',1)
 })
