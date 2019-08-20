@@ -97,6 +97,7 @@ NotificationSchema.statics = {
 }
 export const NOTIFICATION_TYPES = {
     ADD_CONTACT: "add_contact",
+    APPROVE_CONTACT: "approve_contact",
 
 }
 export const NOTIFICATION_CONTENTS = {
@@ -107,6 +108,15 @@ export const NOTIFICATION_CONTENTS = {
                 <div ${classReaded} data-uid="${ userId}">
                     <img class="avatar-small" src="images/users/${userAvatar}" alt=""> 
                     <strong>${username}</strong> đã gửi cho bạn một lời mời kết bạn!
+                </div> 
+            `
+        }
+        if (notificationType === NOTIFICATION_TYPES.APPROVE_CONTACT) {
+            let classReaded = isRead ? '' : ' class="notif-readed-false" '
+            return `
+                <div ${classReaded} data-uid="${ userId}">
+                    <img class="avatar-small" src="images/users/${userAvatar}" alt=""> 
+                    <strong>${username}</strong> đã đã chấp nhận lời mời kết bạn!
                 </div> 
             `
         }

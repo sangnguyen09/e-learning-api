@@ -76,6 +76,26 @@ let removeRequestContactReceived = (currentUserId, contactId) => {
         resolve(true)
     })
 }
+let approveRequestContactReceived = (currentUserId, contactId) => {
+    return new Promise(async (resolve, reject) => {
+        let approveReq = await ContactModel.approveRequestContactReceived(currentUserId, contactId)
+        //console.log(approveReq);
+        if (approveReq.nModified === 0) { //removeReq.result ={n:1,ok:1} ket qủa trả về của việc xóa
+            reject(false);
+        }
+         // create notificaiton
+         // create notification
+        let notificationItem = {
+            senderId: currentUserId,
+            receiverId: contactId,
+            type: NOTIFICATION_TYPES.APPROVE_CONTACT
+        }
+        await NotificationModel.createNew(notificationItem) // tao  mới notify
+
+        // tra ve kq cho cliebt
+        resolve(true)
+    })
+}
 
 let getContacts = (currentUserId) => {
     return new Promise(async (resolve, reject) => {
@@ -226,6 +246,7 @@ module.exports = {
     addNew,
     removeRequestContactSent,
     removeRequestContactReceived,
+    approveRequestContactReceived,
     getContactsReceived,
     getContacts,
     getContactsSent,

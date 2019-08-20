@@ -30,7 +30,7 @@ $(document).ready(function () {
                                     <div class="user-address">
                                         <span>&nbsp ${user.address ? user.address : ''}</span>
                                     </div>
-                                    <div class="user-acccept-contact-received" data-uid="${user._id}">
+                                    <div class="user-approve-request-contact-received" data-uid="${user._id}">
                                     Chấp nhận
                                 </div>
                                 <div class="user-remove-request-contact-received  action-danger"
@@ -41,6 +41,8 @@ $(document).ready(function () {
                             </li`); // modal
                 })
                 removeRequestContactReceived()
+                approveRequestContactReceived()// js/approveRequestContactReceived.js
+                
                 $('#load_more_contacts_received').parent().css('display', 'block')
                 $('.lds-ripple').css('display', 'none')
             }, 300);
