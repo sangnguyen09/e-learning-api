@@ -153,6 +153,13 @@ function changeTypeChat() {
 		}
 	})
 }
+function changeSreenChat() {
+	$('.room-chat').unbind('click').on('click', function () {
+		$('.person').removeClass('active')
+		$(this).find('li').addClass('active')
+		$(this).tab('show')
+	})
+}
 $(document).ready(function() {
 
   // Hide số thông báo trên đầu icon mở modal contact
@@ -189,4 +196,9 @@ $(document).ready(function() {
 
   	//thay dổi kiểu trò chuyện
 	changeTypeChat()
+// thay doi man hinh chat
+	changeSreenChat()
+
+	// active vao phan tu dau tien khi load trang web
+	$('ul.people').find('li')[0].click()
 });
