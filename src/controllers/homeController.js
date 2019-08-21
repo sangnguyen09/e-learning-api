@@ -1,4 +1,4 @@
-import {notification, contact} from '../services/index'
+import {notification, contact, message} from '../services/index'
 
 let getHome = async(req, res) => {
     // only 10 items one time
@@ -18,7 +18,13 @@ let getHome = async(req, res) => {
      // count contacts
      let countAllContacts = await contact.countAllContacts(req.user._id)
      let countAllContactsSent = await contact.countAllContactsSent(req.user._id)
-     let countAllContactsReceived = await contact.countAllContactsReceived(req.user._id)
+	 let countAllContactsReceived = await contact.countAllContactsReceived(req.user._id)
+
+	 let getAllConversationItems = await message.getAllConversationItems(req.user._id);
+
+	 let usersConversations = getAllConversationItems.usersConversations
+	let groupConversations= getAllConversationItems.groupConversations
+	 let allConversations= getAllConversationItems.allConversations
     return res.render("main/home/home", // been file cau hình đã định nghĩa đường dẫn src/view
         {
             errors: req.flash("errors"), // lay tu req ben duoi
@@ -31,9 +37,12 @@ let getHome = async(req, res) => {
             contactsReceived,
             countAllContacts,
             countAllContactsReceived,
-            countAllContactsSent
+			countAllContactsSent,
+			allConversations,
+			groupConversations,
+			usersConversations
         })
-    
+
 }
 
 module.exports = {
