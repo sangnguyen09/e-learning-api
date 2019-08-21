@@ -162,7 +162,8 @@ ContactSchema.statics = {
                 }
             ]
         }, {
-            'status': true
+			'status': true,
+			'updatedAt': Date.now()
         })
     },
 
@@ -182,7 +183,7 @@ ContactSchema.statics = {
                 }
             ]
         }).sort({
-            "createAt": -1
+            "updatedAt": -1
         }).limit(limit).exec()
     },
     getContactsSent(userId, limit) { // danh sachs minh gui yeu cau
@@ -266,7 +267,7 @@ ContactSchema.statics = {
                 }
             ]
         }).sort({
-            "createAt": -1
+            "updatedAt": -1
         }).skip(skip).limit(limit).exec()
     },
     readMoreContactsSent(userId, skip, limit) {
