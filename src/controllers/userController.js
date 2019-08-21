@@ -57,7 +57,8 @@ let updateAvatar = (req, res) => {
             let userUpdate = await user.updateUser(req.user._id, updateUserItem)
 
             // renmove avatar old
-            await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`)
+		await fsExtra.remove(`${app.avatar_directory}/${userUpdate.avatar}`)
+
             let result = {
                 message: transSuccess.user_info_updated,
                 imageSrc: `/images/users/${req.file.filename}`
@@ -79,7 +80,7 @@ let updateInfo = async (req, res) =>{
           errors.map(item => {
             errorArr = [...errorArr, item.msg]; // dung push vao mang
           });
-      
+
           return res.status(500).send(errorArr);
         }
 
