@@ -737,6 +737,7 @@ text-decoration: none;
   cursor: pointer;
   background-color: #fff;
   list-style: none;
+  min-height: 70px
 }
 
 .left .people .person:after {

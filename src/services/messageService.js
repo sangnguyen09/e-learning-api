@@ -38,9 +38,7 @@ export const getAllConversationItems = (currentUserId) => {
 			let allConversationMessages = await Promise.all(allConversationWithMessage);
 			allConversationMessages = _.sortBy(allConversationMessages, (item) => -item.updatedAt)
 			resolve({
-				usersConversations,
-				groupConversations,
-				allConversations,
+
 				allConversationMessages
 			})
 		} catch (error) {
