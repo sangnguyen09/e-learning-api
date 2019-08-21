@@ -4,21 +4,21 @@ import bcrypt from "bcrypt";
 
 const saltRounds =7;
 /**
- * 
- * @param {userID} id 
- * @param {data update} item 
+ *
+ * @param {userID} id
+ * @param {data update} item
  */
 let updateUser= (id, item) =>{
     return UserModel.updateUser(id, item);
 }
 /**
  * Update password for user
- * @param {userID} id 
- * @param {*} dataUpdate 
+ * @param {userID} id
+ * @param {*} dataUpdate
  */
 let updatePassword= (id, dataUpdate) =>{
     return  new Promise(async (resolve, reject) =>{
-        let currentUser = await UserModel.findUserById(id);
+        let currentUser = await UserModel.findUserByIdToUpdatePassword(id);
         if (!currentUser) {
             return reject(transErrors.account_undifined)
         }

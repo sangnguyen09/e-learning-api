@@ -95,8 +95,11 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
       'local.verifyToken': null
     }).exec()
   },
-  findUserById(id) {
+  findUserByIdToUpdatePassword(id) {
     return this.findById(id).exec()
+  },
+  findUserByIdForSessionToUse(id) {
+    return this.findById(id,{'local.password':0}).exec()
   },
   findByFacebookUid(uid) {
     return this.findOne({
@@ -116,14 +119,14 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
     return this.findByIdAndUpdate(id, {'local.password':hashedPassword}).exec()
   },
   /**
-   * 
-   * @param {arr : mang loai tru user id nay da ket banj} deprecatedUserIds 
-   * @param {key search} keyword 
+   *
+   * @param {arr : mang loai tru user id nay da ket banj} deprecatedUserIds
+   * @param {key search} keyword
    */
   findAllForAddContact (deprecatedUserIds, keyword) {
     return this.find({
         $and:[
-          {"_id":{$nin: deprecatedUserIds}} ,//$nin  không nằm trong 
+          {"_id":{$nin: deprecatedUserIds}} ,//$nin  không nằm trong
           { 'local.isActive': true},
           {
             $or:[
