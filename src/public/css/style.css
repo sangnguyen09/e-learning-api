@@ -1120,6 +1120,12 @@ text-decoration: none;
 .right .bubble.me img {
   float: right;
 }
+.right .bubble.me img.avatar-small {
+  margin-left: 10px;
+}
+.right .bubble.you img.avatar-small {
+  margin-right: 10px;
+}
 
 .right .bubble.you img {
   float: left;
@@ -1436,4 +1442,14 @@ text-decoration: none;
 
 .d-inline-block{
   display: inline-block !important
+}
+
+.info-name{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#screen-chat{
+	width: 100%;
+	height: 100%;
 }
