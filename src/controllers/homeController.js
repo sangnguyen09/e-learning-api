@@ -1,5 +1,5 @@
 import {notification, contact, message} from '../services/index'
-import { bufferToBase64 } from '../helpers/clientHelper';
+import { bufferToBase64,lastItemOfArray ,convertTimestampToHumanTime} from '../helpers/clientHelper';
 
 let getHome = async(req, res) => {
     // only 10 items one time
@@ -23,9 +23,6 @@ let getHome = async(req, res) => {
 
 	 let getAllConversationItems = await message.getAllConversationItems(req.user._id);
 
-	 let usersConversations = getAllConversationItems.usersConversations;
-	let groupConversations= getAllConversationItems.groupConversations;
-	 let allConversations= getAllConversationItems.allConversations;
 	 //lấy danh sách tin nhắn theo cuộc hội thoại tối da 30 tin nhắn
 	 let allConversationsWithMessages= getAllConversationItems.allConversationMessages;
     return res.render("main/home/home", // been file cau hình đã định nghĩa đường dẫn src/view
@@ -41,11 +38,11 @@ let getHome = async(req, res) => {
             countAllContacts,
             countAllContactsReceived,
 			countAllContactsSent,
-			allConversations,
-			groupConversations,
-			usersConversations,
 			allConversationsWithMessages,
-	 		bufferToBase64
+			bufferToBase64,
+			lastItemOfArray,
+			convertTimestampToHumanTime
+
         })
 
 }
