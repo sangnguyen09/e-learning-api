@@ -47,13 +47,12 @@ let fbAppCallback = process.env.FB_APP_CALLBACK_URL
      })
      // ham nay duoc goi boi passport.session() , return userinfo to req.user
      passport.deserializeUser((id, done)=>{ // lay user tu session, duoc khai bao tu file server.js
-        UserModel.findUserById(id)
+        UserModel.findUserByIdForSessionToUse(id)
         .then((user) => {
-          return done(null, user)  
+          return done(null, user)
         }).catch((err) => {
-            return done(err, nill)  
+            return done(err, nill)
         });
      })
  }
  module.exports = initPassportFacebook;
- 
