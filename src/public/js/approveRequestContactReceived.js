@@ -1,6 +1,6 @@
 function approveRequestContactReceived() {
     $('.user-approve-request-contact-received').unbind('click').on('click', function () {
-        let targetId = $(this).data('uid'); //data-uid="<%= user._id %>"
+        let targetId = $('.user-approve-request-contact-received').data('uid'); //data-uid="<%= user._id %>"
 
         $.ajax({
             url: '/contact/approve-request-contact-received',
@@ -23,7 +23,7 @@ function approveRequestContactReceived() {
                             <div class="user-remove-contact action-danger" data-uid="${targetId}">
                                 Xóa liên hệ
                             </div>
-                    
+
                             `)
                     let userInfoHTML = userInfo.get(0).outerHTML
                     $('#contacts').find('ul').prepend(userInfoHTML);
@@ -32,7 +32,9 @@ function approveRequestContactReceived() {
                     decreaseNumberNotifyContact('count-request-contact-received') // js/caculateNotifContact.js
                     increaseNumberNotifyContact('count-contacts') // js/caculateNotifContact.js
 
-                    decreaseNumberNotification('noti_contact_counter ', 1) // js/caculateNotification.js
+					decreaseNumberNotification('noti_contact_counter ', 1) // js/caculateNotification.js
+
+					removeContact();
 
                     socket.emit('approve_request_contact_received', {
                         contactId: targetId
@@ -47,9 +49,9 @@ function approveRequestContactReceived() {
 socket.on("response_approve_request_contact_received", function (user) {
     let notif =`
     <div class="notif-readed-false" data-uid="${ user.id }">
-        <img class="avatar-small" src="images/users/${user.avatar}" alt=""> 
+        <img class="avatar-small" src="images/users/${user.avatar}" alt="">
         <strong>${user.username}</strong> đã chấp nhận lời mời kết bạn!
-    </div> 
+    </div>
 
 `
     $(".noti_content").prepend(notif);// popup
@@ -66,7 +68,7 @@ socket.on("response_approve_request_contact_received", function (user) {
 
     let userInfoHTML =
     `
-    <li class="_contactList" data-uid="${user._id}">
+    <li class="_contactList" data-uid="${user.id}">
         <div class="contactPanel">
             <div class="user-avatar">
                 <img src="images/users/${user.avatar}" alt="">
@@ -80,17 +82,18 @@ socket.on("response_approve_request_contact_received", function (user) {
             <div class="user-address">
                 <span>&nbsp ${user.address ? user.address : ''}</span>
             </div>
-            <div class="user-talk" data-uid="${user._id}">
+            <div class="user-talk" data-uid="${user.id}">
                 Trò chuyện
             </div>
-            <div class="user-remove-contact action-danger" data-uid="${user._id}">
+            <div class="user-remove-contact action-danger" data-uid="${user.id}">
                 Xóa liên hệ
             </div>
         </div>
     </li
 
     `
-    $('#contacts').find('ul').prepend(userInfoHTML);
+	$('#contacts').find('ul').prepend(userInfoHTML);
+	removeContact();
 })
 
 

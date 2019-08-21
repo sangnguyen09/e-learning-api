@@ -31,7 +31,7 @@ ContactSchema.statics = {
     },
     /**
      * tim tat ca cac item lien quan den user
-     * @param {*} userId 
+     * @param {*} userId
      */
     findAllByUser(userId) {
         return this.find({
@@ -46,9 +46,9 @@ ContactSchema.statics = {
         })
     },
     /**
-     * 
-     * @param {string} userId 
-     * @param {string} contactId 
+     *
+     * @param {string} userId
+     * @param {string} contactId
      */
     checkExists(userId, contactId) {
         return this.findOne({
@@ -76,9 +76,40 @@ ContactSchema.statics = {
     },
 
     /**
-     * 
-     * @param {string} userId 
-     * @param {string} contactId 
+     * removeContact
+     * @param {string} userId
+     * @param {string} contactId
+     */
+    removeContact(userId, contactId) {
+        return this.remove({
+			$or: [
+                {
+                    $and: [{
+                            'userId': userId
+                        },
+                        {
+                            'contactId': contactId
+						}, // truowngf hợp a đã gửi kết bạn với b
+						{'status':true}
+                    ]
+                },
+                {
+                    $and: [{
+                            'userId': contactId
+                        }, // truowngf hợp b đã gửi kết bạn với a
+                        {
+                            'contactId': userId
+						},
+						{'status':true}
+                    ]
+                },
+            ]
+        }).exec()
+    },
+    /**
+     *
+     * @param {string} userId
+     * @param {string} contactId
      */
     removeRequestContactSent(userId, contactId) {
         return this.remove({
@@ -96,8 +127,8 @@ ContactSchema.statics = {
     },
     /**
      * removeRequestContactReceived
-     * @param {string} userId 
-     * @param {string} contactId 
+     * @param {string} userId
+     * @param {string} contactId
      */
     removeRequestContactReceived(userId, contactId) {
         return this.remove({
@@ -115,8 +146,8 @@ ContactSchema.statics = {
     },
     /**
      * approveRequestContactReceived
-     * @param {string: of currentUser} userId 
-     * @param {string} contactId 
+     * @param {string: of currentUser} userId
+     * @param {string} contactId
      */
     approveRequestContactReceived(userId, contactId) {
         return this.update({

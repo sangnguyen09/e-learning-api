@@ -15,7 +15,7 @@ $(document).ready(function () {
                 newContactUsers.map(function (user) {
                     $("#contacts")
                         .find('ul')
-                            .append(` 
+                            .append(`
                                 <li class="_contactList" data-uid="${user._id}">
                                 <div class="contactPanel">
                                     <div class="user-avatar">
@@ -40,7 +40,9 @@ $(document).ready(function () {
                             </li`); // modal
                 })
                 $('#load_more_contacts').parent().css('display', 'block')
-                $('.lds-ripple').css('display', 'none')
+				$('.lds-ripple').css('display', 'none')
+
+				removeContact();//js/removeContact.jss
             }, 300);
 
         })

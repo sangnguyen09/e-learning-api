@@ -63,6 +63,17 @@ let removeRequestContactSent = (currentUserId, contactId) => {
         resolve(true)
     })
 }
+let removeContact = (currentUserId, contactId) => {
+    return new Promise(async (resolve, reject) => {
+        let removeContact = await ContactModel.removeContact(currentUserId, contactId)
+        if (removeContact.result.n === 0) { //removeReq.result ={n:1,ok:1} ket qủa trả về của việc xóa
+            reject(false);
+        }
+
+        // tra ve kq cho cliebt
+        resolve(true)
+    })
+}
 let removeRequestContactReceived = (currentUserId, contactId) => {
     return new Promise(async (resolve, reject) => {
         let removeReq = await ContactModel.removeRequestContactReceived(currentUserId, contactId)
@@ -176,11 +187,11 @@ let countAllContactsReceived = (currentUserId) => {
 
 /**
  * Read more contacts . max 10 item one time
- * @param {string} currentUserId 
- * @param {number} skipNumberContacts 
+ * @param {string} currentUserId
+ * @param {number} skipNumberContacts
  */
 let readMoreContacts = (currentUserId, skipNumberContacts) => {
-   
+
     return new Promise(async (resolve, reject) => {
         try {
             let newContacts = await ContactModel.readMoreContacts(currentUserId, skipNumberContacts, LIMIT_NUMBER_TAKEN)
@@ -201,11 +212,11 @@ let readMoreContacts = (currentUserId, skipNumberContacts) => {
 }
 /**
  * Read more contacts sent . max 10 item one time
- * @param {string} currentUserId 
- * @param {number} skipNumberContacts 
+ * @param {string} currentUserId
+ * @param {number} skipNumberContacts
  */
 let readMoreContactsSent = (currentUserId, skipNumberContacts) => {
-   
+
     return new Promise(async (resolve, reject) => {
         try {
             let newContacts = await ContactModel.readMoreContactsSent(currentUserId, skipNumberContacts, LIMIT_NUMBER_TAKEN)
@@ -222,16 +233,16 @@ let readMoreContactsSent = (currentUserId, skipNumberContacts) => {
 }
 /**
  * Read more contacts received . max 10 item one time
- * @param {string} currentUserId 
- * @param {number} skipNumberContacts 
+ * @param {string} currentUserId
+ * @param {number} skipNumberContacts
  */
 let readMoreContactsReceived = (currentUserId, skipNumberContacts) => {
-   
-   
+
+
     return new Promise(async (resolve, reject) => {
         try {
             let newContacts = await ContactModel.readMoreContactsReceived(currentUserId, skipNumberContacts, LIMIT_NUMBER_TAKEN)
-            
+
             let users = newContacts.map(async contact => {
                 return await UserModel.getNormalUserDataById(contact.userId);
             })
@@ -243,7 +254,8 @@ let readMoreContactsReceived = (currentUserId, skipNumberContacts) => {
 }
 module.exports = {
     findUsersContact,
-    addNew,
+	addNew,
+	removeContact,
     removeRequestContactSent,
     removeRequestContactReceived,
     approveRequestContactReceived,
