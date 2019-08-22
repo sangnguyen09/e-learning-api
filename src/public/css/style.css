@@ -1461,3 +1461,7 @@ text-decoration: none;
   color: #e74c3c !important;
     font-weight:bold
 }
+.typing-chat{
+  position: absolute;
+  bottom: 13.1%;
+}

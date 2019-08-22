@@ -40,10 +40,19 @@ function enableEmojioneArea(divId) {
 			keyup: function (editor, event) {
 				// gan giá trị thay đổi vào thẻ input
 				$(`#write-chat-${divId}`).val(this.getText());
+				//bật chưcs năng đang soạn tin
+				if ((event.which === 13)) {// nếu bấm enter thì tức là co tin nhắn -> xoá typing đi
+					return
+				}
+				typingOn(divId);
 			},
 			// bật lắng nghe DOM cho việc chat tin nhắn văn bản + emoji
 			click: function () {
 				textAndEmojiChat(divId)
+			},
+			blur: function () {
+				// tắt chuức năng đang soạn tin nhắn
+				typingOff(divId)
 			}
 		},
 	});

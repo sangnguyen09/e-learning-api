@@ -58,6 +58,10 @@ function textAndEmojiChat(divId) {
 				// buơc 6: Emit socketio
 				socket.emit('chat_text_emoji', dataToEmit);
 
+				//Bươc 7 : emit remove typing realtime
+				typingOff(divId)
+			 
+
 			}).fail(function (res) {
 				//errors
 				alertify.notify(res.responseText, 'error', 7)
