@@ -38,8 +38,10 @@ function enableEmojioneArea(divId) {
     shortnames: false,
     events: {
       keyup: function(editor, event) {
+		  // gan giá trị thay đổi vào thẻ input
         $(`#write-chat-${divId}`).val(this.getText());
 	  },
+	  // bật lắng nghe DOM cho việc chat tin nhắn văn bản + emoji
 	  click:function () {
 		  textAndEmojiChat(divId)
 	  }
@@ -217,5 +219,5 @@ $(document).ready(function() {
 	changeSreenChat()
 
 	// active vao phan tu dau tien khi load trang web
-	$('ul.people').find('li')[0].click()
+	$('ul.people').find('a')[0].click()
 });

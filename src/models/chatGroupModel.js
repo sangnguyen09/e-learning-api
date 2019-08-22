@@ -24,6 +24,20 @@ ChatGroupSchema.statics ={
 		return this.find({
 			'members':{$elemMatch:{'userId':userId}}
 		}).sort({'updatedAt':-1}).limit(limit).exec()
+	},
+	getChatGroupById(id){
+		return this.findById(id).exec()
+	},
+	/**
+	 * upadte group chat when has new message
+	 * @param {string} id of group chat
+	 * @param {number} newMessageAmount
+	 */
+	updateWhenHasNewMessage(id, newMessageAmount){
+		return this.findByIdAndUpdate(id,{
+			'messageAmount':newMessageAmount,
+			'updatedAt':Date.now()
+		})
 	}
 }
 module.exports = mongoose.model('chat-group', ChatGroupSchema) // chat-group để số it khi tạo bảng dữ liệu nó sẽ tự thêm s

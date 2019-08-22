@@ -40,6 +40,13 @@ let MessageSchema = new Schema({
 
 MessageSchema.statics = {
 	/**
+	 *  create item
+	 * @param {object} item
+	 */
+	createNew(item) {
+        return this.create(item) // create có sẵn trong moongoose tạo bản ghi mới
+    },
+	/**
  * lay sanh saach tin nhan cua ca nhan
  */
 	getMessagesInPersonal(senderId, receiverId, limit) {
@@ -70,6 +77,11 @@ MessageSchema.statics = {
 	/**
 	 * lay tin nhắn trong group
 	 */
+	/**
+	 *
+	 * @param {*} receiverId
+	 * @param {*} limit
+	 */
 	getMessagesInGroup(receiverId, limit) {
 		return this.find({ 'receiverId': receiverId }).sort({ 'createdAt': 1 }).limit(limit).exec();
 	}
@@ -79,7 +91,7 @@ export const MESSAGE_CONVERSATION_TYPE = {
 	GROUP: 'group',
 }
 export const MESSAGE_TYPE = {
-	TEXT: 'personal',
+	TEXT: 'text',
 	IMAGE: 'image',
 	FILE: 'file',
 }
