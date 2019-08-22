@@ -30,9 +30,15 @@ export const getAllConversationItems = (currentUserId) => {
 
 			// lay tin nhắn từ đổ ra cuộc hội thoại
 			let allConversationWithMessage = allConversations.map(async conversation => {
-				let getMessages = await MessageModel.getMessages(currentUserId, conversation._id, LIMIT_MESSAGE_TAKEN);
-					conversation = conversation.toObject()
+				conversation = conversation.toObject()
+				if (conversation.members) {
+					let getMessages = await MessageModel.getMessagesInGroup(conversation._id, LIMIT_MESSAGE_TAKEN);
 					conversation.messages = getMessages
+				} else {
+					let getMessages = await MessageModel.getMessagesInPersonal(currentUserId, conversation._id, LIMIT_MESSAGE_TAKEN);
+					conversation.messages = getMessages
+				}
+
 				return conversation
 			})
 			let allConversationMessages = await Promise.all(allConversationWithMessage);
