@@ -1,6 +1,7 @@
 import passport from "passport";
 import passportGoogle from "passport-google-oauth"; // kiêm tra đang nhập
 import UserModel from '../../models/userModel'
+import ChatGroupModel from '../../models/chatGroupModel'
 import { transErrors, transSuccess } from "../../../lang/vi";
 
 let GoogleStratery = passportGoogle.OAuth2Strategy;
@@ -47,13 +48,19 @@ let ggAppCallback = process.env.GG_APP_CALLBACK_URL
         done(null, user._id)
      })
      // ham nay duoc goi boi passport.session() , return userinfo to req.user
-     passport.deserializeUser((id, done)=>{ // lay user tu session, duoc khai bao tu file server.js
-        UserModel.findUserByIdForSessionToUse(id)
-        .then((user) => {
-          return done(null, user)
-        }).catch((err) => {
-            return done(err, nill)
-        });
-     })
+     passport.deserializeUser(async (id, done)=>{ // lay user tu session, duoc khai bao tu file server.js
+        try {
+        
+         let user = await  UserModel.findUserByIdForSessionToUse(id);
+         let getChatGroupIds = await ChatGroupModel.getChatGroupIdsByUser(user._id);
+         user = user.toObject();
+         user.chatGroupIds =getChatGroupIds
+         return done(null, user)
+ 
+        } catch (error) {
+         return done(err, nill)
+        }
+          
+      })
  }
  module.exports = initPassportGoogle;

@@ -37,7 +37,12 @@ ChatGroupSchema.statics ={
 		return this.findByIdAndUpdate(id,{
 			'messageAmount':newMessageAmount,
 			'updatedAt':Date.now()
-		})
+		}).exec()
+	},
+	getChatGroupIdsByUser(userId){
+		return this.find({
+			'members':{$elemMatch:{'userId':userId}}
+		},{_id:1}).exec();
 	}
 }
 module.exports = mongoose.model('chat-group', ChatGroupSchema) // chat-group để số it khi tạo bảng dữ liệu nó sẽ tự thêm s
