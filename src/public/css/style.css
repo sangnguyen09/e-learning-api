@@ -1457,3 +1457,7 @@ text-decoration: none;
 .show-number-members,.show-number-messages {
   color: red
 }
+.message-time-realtime{
+  color: #e74c3c !important;
+    font-weight:bold
+}
