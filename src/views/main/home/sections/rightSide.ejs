@@ -22,6 +22,26 @@
 						<i class="fa fa-photo"></i>
 					</a>
 				</span>
+				<span class="chat-menu-right">
+					<a href="javascript:void(0)">&nbsp;</a>
+				</span>
+				<span class="chat-menu-right">
+					<a href="javascript:void(0)" class="number-members" >
+						<span class="show-number-members"><%= conversation.userAmount %></span>
+						<i class="fa fa-users"></i>
+					</a>
+
+				</span>
+				<span class="chat-menu-right">
+					<a href="javascript:void(0)">&nbsp;</a>
+				</span>
+				<span class="chat-menu-right">
+					<a href="javascript:void(0)" class="number-messages" >
+						<span class="show-number-messages"><%= conversation.messageAmount %></span>
+						<i class="fa fa-comment-o"></i>
+					</a>
+
+				</span>
 			</div>
 			<div class="content-chat">
 				<div class="chat" data-chat="<%= conversation._id %>">
@@ -29,15 +49,17 @@
 
 					<% if(message.messageType === 'text' ){%>
 					<div
-						class="bubble <%if(message.senderId == user._id) {%> me <% } else {%> you <%}%>" data-mess-id="<%= message._id %>">
-						<img src="/images/users/<%= message.sender.avatar %>" title="<%= message.sender.name %>" class="avatar-small">
+						class="convert-emoji bubble <%if(message.senderId == user._id) {%> me <% } else {%> you <%}%>" data-mess-id="<%= message._id %>">
+						<img src="/images/users/<%= message.sender.avatar %>" title="<%= message.sender.name %>"
+							class="avatar-small">
 						<%= message.text %>
 					</div>
 					<% }%>
 					<% if(message.messageType ==='image'){%>
 					<div
 						class="bubble <%if(message.senderId == user._id) {%> me <% } else {%> you <%}%> bubble-image-file" data-mess-id="<%= message._id %>">
-						<img src="/images/users/<%= message.sender.avatar %>" title="<%= message.sender.name %>" class="avatar-small">
+						<img src="/images/users/<%= message.sender.avatar %>" title="<%= message.sender.name %>"
+							class="avatar-small">
 						<img src="data:<%= message.file.contentType%>; base64, <%= bufferToBase64(message.file.data) %>"
 							class="show-image-chat">
 					</div>
@@ -45,7 +67,8 @@
 					<% if(message.messageType ==='file'){%>
 					<div
 						class="bubble <%if(message.senderId == user._id) {%> me <% } else {%> you <%}%> bubble-image-file" data-mess-id="<%= message._id %>">
-						<img src="/images/users/<%= message.sender.avatar %>" title="<%= message.sender.name %>" class="avatar-small">
+						<img src="/images/users/<%= message.sender.avatar %>" title="<%= message.sender.name %>"
+							class="avatar-small">
 						<a href="data:<%= message.file.contentType%>; base64, <%= bufferToBase64(message.file.data) %>"
 							download="<%= message.file.fileName %>">
 							<%= message.file.fileName %>
@@ -57,7 +80,8 @@
 				</div>
 			</div>
 			<div class="write" data-chat="<%= conversation._id %>">
-				<input type="text" class="write-chat chat-in-group" id="write-chat-<%= conversation._id %>" data-chat="<%= conversation._id %>">
+				<input type="text" class="write-chat chat-in-group" id="write-chat-<%= conversation._id %>"
+					data-chat="<%= conversation._id %>">
 				<div class="icons">
 					<a href="#" class="icon-chat" data-chat="<%= conversation._id %>"><i class="fa fa-smile-o"></i></a>
 					<label for="image-chat">
@@ -105,7 +129,7 @@
 
 					<% if(message.messageType === 'text' ){%>
 					<div
-						class="bubble <%if(message.senderId == user._id) {%> me <% } else {%> you <%}%>" data-mess-id="<%= message._id %>">
+						class="convert-emoji bubble <%if(message.senderId == user._id) {%> me <% } else {%> you <%}%>" data-mess-id="<%= message._id %>">
 						<%= message.text %>
 					</div>
 					<% }%>
@@ -130,7 +154,8 @@
 				</div>
 			</div>
 			<div class="write" data-chat="<%= conversation._id %>">
-				<input type="text" class="write-chat" id="write-chat-<%= conversation._id %>" data-chat="<%= conversation._id %>">
+				<input type="text" class="write-chat" id="write-chat-<%= conversation._id %>"
+					data-chat="<%= conversation._id %>">
 				<div class="icons">
 					<a href="#" class="icon-chat" data-chat="<%= conversation._id %>"><i class="fa fa-smile-o"></i></a>
 					<label for="image-chat">
