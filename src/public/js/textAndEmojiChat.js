@@ -15,7 +15,14 @@ function textAndEmojiChat(divId) {
 			if ($(`#write-chat-${divId}`).hasClass('chat-in-group')) {
 				dataTextEmojiForSend.isChatGroup = true
 			}
-			console.log(dataTextEmojiForSend)
+			// goi send message len server
+			$.post('/message/add-new-text-emoji',dataTextEmojiForSend,function (data) {
+				//succces
+				console.log(data.message );
+			}).fail(function (res) {
+				//errors
+				alertify.notify(res.responseText,'error',7)
+			})
 		}
 	})
 }
