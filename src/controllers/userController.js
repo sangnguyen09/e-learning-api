@@ -42,7 +42,7 @@ let updateAvatar = (req, res) => {
 
     avatarUploadFile(req, res, async (err) => {
         if (err) {
-            console.log(err);
+           
             if (err.message) {
                 return res.status(500).send(transErrors.avatar_size)
             }

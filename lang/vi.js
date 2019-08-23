@@ -19,6 +19,8 @@ export const transErrors ={
     login_failed: "Sai tài khoản hoặc mật khẩu !",
     server_error: "Có lỗi ở phía server, vui lòng thông báo bộ phận của chúng tôi về lỗi này!",
     avatar_type: 'Kiểu file không hợp lệ, chỉ chấp nhận jpg & png',
+    image_chat_type: 'Kiểu file không hợp lệ, chỉ chấp nhận jpg & png',
+    image_chat_size: 'Ảnh upalod tối đa cho phép là 1MB',
     avatar_size: 'Ảnh upalod tối đa cho phép là 1MB',
 	user_current_password_failed: "Mật khẩu hiện tại không chính xác",
 	conversation_not_found:'Cuộc trò chuyện không tồn tại!'
