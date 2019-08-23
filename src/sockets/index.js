@@ -6,6 +6,7 @@ import { removeContact } from './contact/removeContact';
 import { chatTextEmoji } from './chats/chatTextEmoji';
 import { typingOn } from './chats/typingOn';
 import { typingOff } from './chats/typingOff';
+import { chatImage } from './chats/chatImage';
 
 /**
  *
@@ -19,7 +20,8 @@ let initSockets = (io)=>{
     removeContact(io),
     chatTextEmoji(io),
     typingOn(io),
-    typingOff(io)
+    typingOff(io),
+    chatImage(io)
     
 }
 module.exports = initSockets;
