@@ -8,6 +8,7 @@ import { typingOn } from './chats/typingOn';
 import { typingOff } from './chats/typingOff';
 import { chatImage } from './chats/chatImage';
 import { chatAttachment } from './chats/chatAttachment';
+import { chatVideo } from './chats/chatVideo';
 
 /**
  *
@@ -23,7 +24,8 @@ let initSockets = (io)=>{
     typingOn(io),
     typingOff(io),
     chatImage(io),
-    chatAttachment(io)
+    chatAttachment(io),
+    chatVideo(io)
     
 }
 module.exports = initSockets;
