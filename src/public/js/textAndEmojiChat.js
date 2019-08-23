@@ -21,7 +21,7 @@ function textAndEmojiChat(divId) {
 				}
 				//succces
 				// bước 1: xử lý tin nhắn trước khi hiển thị
-				let messageOfMe = $(`<div class=" bubble  me data-mess-id="${data.message._id}">   </div>`);
+				let messageOfMe = $(`<div class=" bubble  me" data-mess-id="${data.message._id}">   </div>`);
 				messageOfMe.text(data.message.text);
 				let converEmojiMessage = emojione.toImage(messageOfMe.html())
 
@@ -74,7 +74,7 @@ $(document).ready(function () {
 	socket.on('response_chat_text_emoji', function (res) {
 		let divId = ''
 		// bước 1: xử lý tin nhắn trước khi hiển thị
-		let messageOfYou = $(`<div class=" bubble  you data-mess-id="${res.message._id}">   </div>`);
+		let messageOfYou = $(`<div class=" bubble  you" data-mess-id="${res.message._id}">   </div>`);
 		messageOfYou.text(res.message.text);
 		let converEmojiMessage = emojione.toImage(messageOfYou.html())
 
