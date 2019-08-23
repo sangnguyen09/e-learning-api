@@ -41,7 +41,7 @@ function enableEmojioneArea(divId) {
 				// gan giá trị thay đổi vào thẻ input
 				$(`#write-chat-${divId}`).val(this.getText());
 				//bật chưcs năng đang soạn tin
-				if ((event.which === 13)) {// nếu bấm enter thì tức là co tin nhắn -> xoá typing đi
+				if ((event.which === 13)) { // nếu bấm enter thì tức là co tin nhắn -> xoá typing đi
 					return
 				}
 				typingOn(divId);
@@ -126,7 +126,7 @@ function gridPhotos(layoutNumber) {
 
 		});
 		// bat su kien dong modal
-		$(`#${modalImageId}`).on('hidden.bs.modal',function () {
+		$(`#${modalImageId}`).on('hidden.bs.modal', function () {
 			$(this).find('div.modal-body').html(originDataImage)
 		})
 	})
@@ -201,17 +201,21 @@ function changeSreenChat() {
 		imageChat(divId)
 		//tệp tin đính kèm
 		attachmentChat(divId)
+			// call video chat
+	videoChat(divId)
 	})
 
 
 }
+
 function convertEmoji() {
-  $(".convert-emoji").each(function () {
+	$(".convert-emoji").each(function () {
 		var original = $(this).html();
 		var converted = emojione.toImage(original);
 		$(this).html(converted);
 	});
 }
+
 function bufferToBase64(buffer) {
 	return btoa(
 		new Uint8Array(buffer)
@@ -254,12 +258,15 @@ $(document).ready(function () {
 	//thay dổi kiểu trò chuyện
 	changeTypeChat()
 	// thay doi man hinh chat
-  changeSreenChat()
-  
-  //chuyển unicode thành hình ảnh
-  convertEmoji()
+	changeSreenChat()
+
+	//chuyển unicode thành hình ảnh
+	convertEmoji()
 	// active vao phan tu dau tien khi load trang web
 	$('ul.people').find('a')[0].click()
 
+	$('#video-chat-group').bind('click', function () {
+		alertify.notify('Không khả dụng với nhóm trò chuyện', 'warning', 7)
+	})
 
 });
