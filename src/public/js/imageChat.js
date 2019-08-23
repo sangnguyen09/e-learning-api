@@ -14,7 +14,8 @@ function imageChat(divId) {
 			$(this).val(null);
 			return
 		}
-		let targetId = $(this).data('chat');
+		console.log('ok');
+		let targetId = $(this).data('chat'); 
 		let isChatGroup = false
 		let messageFormData = new FormData();
 		messageFormData.append('my-image-chat', fileData);

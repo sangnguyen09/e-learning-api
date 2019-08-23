@@ -1,5 +1,4 @@
 export const app ={
-    max_event_listener:30, // so luong lang nghe su kien socket
     image_chat_directory :'src/public/images/chat/message',
     image_chat_type:['image/png','image/jpg','image/jpeg',],
     image_chat_limit_size:1048576,// byte= 1M,
@@ -10,6 +9,7 @@ export const app ={
     avatar_directory :'src/public/images/users',
     avatar_type:['image/png','image/jpg','image/jpeg',],
 	avatar_limit_size:1048576,// byte= 1M,
-	general_avatar_group_chat :'group-avatar-trungquandev.png'
+    general_avatar_group_chat :'group-avatar-trungquandev.png',
+    max_event_listener:30, // so luong lang nghe su kien socket
 
 }

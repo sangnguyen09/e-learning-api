@@ -201,8 +201,8 @@ function changeSreenChat() {
 		imageChat(divId)
 		//tệp tin đính kèm
 		attachmentChat(divId)
-			// call video chat
-	videoChat(divId)
+		// call video chat
+		videoChat(divId)
 	})
 
 

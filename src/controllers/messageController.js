@@ -70,6 +70,7 @@ let imageMessageUploadFile = multer({
 
 export const addNewImage = (req, res) => {
 	imageMessageUploadFile(req, res, async (err) => {
+
 		if (err) {
 			if (err.message) {
 				return res.status(500).send(transErrors.image_chat_size)
@@ -89,7 +90,7 @@ export const addNewImage = (req, res) => {
 			let newMessage = await message.addNewImage(sender, receiverId, messageVal, isChatGroup)
 
 			// remove image bởi vì hình ảnh luw trong mongodb
-			await fsExtra.remove(`${app.image_chat_directory}/${newMessage.file.fileName}`)
+			await fsExtra.remove(messageVal.path)
 			return res.status(200).send({
 				message: newMessage
 			})
@@ -117,6 +118,7 @@ let attachmentMessageUploadFile = multer({
 		fileSize: app.attachment_chat_limit_size
 	}
 }).single('my-attachment-chat') 
+
 export const addNewAttachment = (req, res) => {
 	attachmentMessageUploadFile(req, res, async (err) => {
 		if (err) {

@@ -133,6 +133,7 @@ export const addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => 
  * @param {boolen} isChatGroup
  */
 export const addNewImage = (sender, receiverId, messageVal, isChatGroup) => {
+	console.log(sender);
 	return new Promise(async (resolve,reject)=>{
 		try {
 			if (isChatGroup) {
