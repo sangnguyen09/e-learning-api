@@ -199,6 +199,8 @@ function changeSreenChat() {
 		enableEmojioneArea(divId);
 		//bật lắng nghe cho việc chat tin nhắn hình ảnh
 		imageChat(divId)
+		//tệp tin đính kèm
+		attachmentChat(divId)
 	})
 
 
@@ -210,6 +212,13 @@ function convertEmoji() {
 		$(this).html(converted);
 	});
 }
+function bufferToBase64(buffer) {
+	return btoa(
+		new Uint8Array(buffer)
+		.reduce((data, byte) => data + String.fromCharCode(byte), '')
+	);
+}
+
 $(document).ready(function () {
 
 	// Hide số thông báo trên đầu icon mở modal contact

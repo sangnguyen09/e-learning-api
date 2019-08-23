@@ -21,6 +21,7 @@ export const transErrors ={
     avatar_type: 'Kiểu file không hợp lệ, chỉ chấp nhận jpg & png',
     image_chat_type: 'Kiểu file không hợp lệ, chỉ chấp nhận jpg & png',
     image_chat_size: 'Ảnh upalod tối đa cho phép là 1MB',
+    attachment_chat_size: 'File upalod tối đa cho phép là 1MB',
     avatar_size: 'Ảnh upalod tối đa cho phép là 1MB',
 	user_current_password_failed: "Mật khẩu hiện tại không chính xác",
 	conversation_not_found:'Cuộc trò chuyện không tồn tại!'

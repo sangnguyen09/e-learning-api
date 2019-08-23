@@ -210,3 +210,88 @@ export const addNewImage = (sender, receiverId, messageVal, isChatGroup) => {
 		}
 	})
 }
+/**
+ * add new image chat
+ * @param {objec} sender current
+ * @param {string} receiverId id of an user or a gr
+ * @param {file} messageVal
+ * @param {boolen} isChatGroup
+ */
+export const addNewAttachment = (sender, receiverId, messageVal, isChatGroup) => {
+	return new Promise(async (resolve,reject)=>{
+		try {
+			if (isChatGroup) {
+				let getChatGroupReceiver = await ChatGroupModel.getChatGroupById(receiverId);
+				if (!getChatGroupReceiver) {
+					return reject(transErrors.conversation_not_found)
+				}
+				let receiver ={
+					id: getChatGroupReceiver._id,
+					name: getChatGroupReceiver.name,
+					avatar:app.general_avatar_group_chat,
+				}
+				let attachmentBuffer = await fsExtra.readFile(messageVal.path);
+				let attachmentContentType =messageVal.mimetype;
+				let attachmentName = messageVal.originalname;
+
+				let newMessageItem ={
+					senderId: sender.id,
+					receiverId: receiver.id,
+					conversationType: MESSAGE_CONVERSATION_TYPE.GROUP,
+					messageType: MESSAGE_TYPE.FILE,
+					sender: sender,
+					receiver:  receiver,
+					file: {
+						data: attachmentBuffer,
+						contentType: attachmentContentType,
+						fileName: attachmentName
+					},
+					createdAt: Date.now(),
+
+				}
+				//  tao tin nhắn
+				let newMessage = await MessageModel.createNew(newMessageItem);
+				// update group chat để cập nhật lại ví trí
+				await ChatGroupModel.updateWhenHasNewMessage(getChatGroupReceiver._id, getChatGroupReceiver.messageAmount +1);
+				resolve(newMessage);
+			} else {
+				let getUserReceiver = await UserModel.getNormalUserDataById(receiverId);
+				if (!getUserReceiver) {
+					return reject(transErrors.conversation_not_found)
+				}
+				let receiver ={
+					id: getUserReceiver._id,
+					name: getUserReceiver.username,
+					avatar:getUserReceiver.avatar,
+				}
+
+				let attachmentBuffer = await fsExtra.readFile(messageVal.path);
+				let attachmentContentType =messageVal.mimetype;
+				let attachmentName = messageVal.originalname;
+
+				let newMessageItem ={
+					senderId: sender.id,
+					receiverId: receiver.id,
+					conversationType: MESSAGE_CONVERSATION_TYPE.PERSONAL,
+					messageType: MESSAGE_TYPE.FILE,
+					sender: sender,
+					receiver:  receiver,
+					file: {
+						data: attachmentBuffer,
+						contentType: attachmentContentType,
+						fileName: attachmentName
+					},
+					createdAt: Date.now(),
+
+				}
+				let newMessage = await MessageModel.createNew(newMessageItem)
+				// update contact để cập nhật lại ví trí
+				await ContactModel.updateWhenHasNewMessage(sender.id, getUserReceiver._id);
+
+				resolve(newMessage);
+			}
+		} catch (error) {
+			reject(error)
+		}
+	})
+}
