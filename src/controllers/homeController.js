@@ -8,39 +8,39 @@ import request from "request";
 
 let getICETurnServer = () => {
   return new Promise(async (resolve, reject) => {
-    // Node Get ICE STUN and TURN list
-    let o = {
-      format: "urls"
-    };
+    // // Node Get ICE STUN and TURN list
+    // let o = {
+    //   format: "urls"
+    // };
 
-    let bodyString = JSON.stringify(o);
-    let options = {
-      url: "https://global.xirsys.net/_turn/awesome-chat",
-      //   host: "global.xirsys.net",
-      //   path: "/_turn/awesome-chat",
-      method: "PUT",
-      headers: {
-        Authorization:
-          "Basic " +
-          Buffer.from("sang7817:0cf5e674-c682-11e9-82b3-0242ac110007").toString(
-            "base64"
-          ),
-        "Content-Type": "application/json",
-        "Content-Length": bodyString.length
-      }
-    };
-    // call a request to get ICE list of tun server
-    request(options,(error, response, body) => {
-        if (error) {
-            console.log(error);
-            return reject(error)
-        }
-        let bodyJson  = JSON.parse(body)
-        resolve(bodyJson.v.iceServers)
-    })
+    // let bodyString = JSON.stringify(o);
+    // let options = {
+    //   url: "https://global.xirsys.net/_turn/awesome-chat",
+    //   //   host: "global.xirsys.net",
+    //   //   path: "/_turn/awesome-chat",
+    //   method: "PUT",
+    //   headers: {
+    //     Authorization:
+    //       "Basic " +
+    //       Buffer.from("sang7817:0cf5e674-c682-11e9-82b3-0242ac110007").toString(
+    //         "base64"
+    //       ),
+    //     "Content-Type": "application/json",
+    //     "Content-Length": bodyString.length
+    //   }
+    // };
+    // // call a request to get ICE list of tun server
+    // request(options,(error, response, body) => {
+    //     if (error) {
+    //         console.log(error);
+    //         return reject(error)
+    //     }
+    //     let bodyJson  = JSON.parse(body)
+    //     resolve(bodyJson.v.iceServers)
+    // })
 
 
-    
+    resolve([])
   });
 };
 

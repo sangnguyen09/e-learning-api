@@ -9,6 +9,7 @@ import { typingOff } from './chats/typingOff';
 import { chatImage } from './chats/chatImage';
 import { chatAttachment } from './chats/chatAttachment';
 import { chatVideo } from './chats/chatVideo';
+import { userIsOnline } from './status/userIsOnline';
 
 /**
  *
@@ -16,16 +17,17 @@ import { chatVideo } from './chats/chatVideo';
  */
 let initSockets = (io)=>{
     addNewContact(io);
-    removeRequestContactSent(io)
-    removeRequestContactReceived(io)
-	approveRequestContactReceived(io),
-    removeContact(io),
-    chatTextEmoji(io),
-    typingOn(io),
-    typingOff(io),
-    chatImage(io),
-    chatAttachment(io),
-    chatVideo(io)
+    removeRequestContactSent(io);
+    removeRequestContactReceived(io);
+	approveRequestContactReceived(io);
+    removeContact(io);
+    chatTextEmoji(io);
+    typingOn(io);
+    typingOff(io);
+    chatImage(io);
+    chatAttachment(io);
+    chatVideo(io);
+    userIsOnline(io);
     
 }
 module.exports = initSockets;
