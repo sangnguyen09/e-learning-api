@@ -106,7 +106,7 @@ export const chatVideo = (io) => {
 				
 			}
 			if (clients[data.listenerId] ) {
-				emitNotifyToArray(clients, data.listenerId, io,'server_send_accept_call_to_caller',response)
+				emitNotifyToArray(clients, data.listenerId, io,'server_send_accept_call_to_listener',response)
 				
 			}
 		});
