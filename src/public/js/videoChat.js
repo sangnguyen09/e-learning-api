@@ -29,7 +29,8 @@ $(document).ready(function () {
 	socket.on('server_send_listener_offline', function () {
 		alertify.notify('Người dùng này hiện không trực tuyến.', 'warning', 7)
 	})
-
+ let iceServerList =$('#ice-server-list').val();
+	iceServerList = JSON.parse(iceServerList);
 	// Buoc 3  Của listener
 	let getPeerId = ''
 	const peer = new Peer({
@@ -37,6 +38,9 @@ $(document).ready(function () {
 		host: 'peerjs-server-trungquandev.herokuapp.com',
 		secure: true,
 		port: 443,
+		config:{
+			'iceServers':iceServerList
+		}
 		//debug: 3
 	}); // da link ở master
 	peer.on('open', function (peerId) {
