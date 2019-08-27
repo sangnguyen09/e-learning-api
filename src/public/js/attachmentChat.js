@@ -82,7 +82,7 @@
 						</a>
 				 </li>`
 
- 				$(`#attachmentssModal_${divId}`).find('ul.list-attachments').append(attachmentChatToAddModal)
+ 				$(`#attachmentsModal_${divId}`).find('ul.list-attachments').append(attachmentChatToAddModal)
  			},
  			error: function (err) {
  				alertify.notify(err.responseText, 'error', 7)
@@ -143,8 +143,8 @@
  		})
  		$(`.person[data-chat=${divId}]`).trigger('sangdev.moveConversationToTop')
 
- 		// buoc 6
- 		if (res.message.sender.id !== $('#dropdown-navbar-user').data('uid')) {
+		 // buoc 6
+ 		if (res.message.sender.id != $('#dropdown-navbar-user').data('uid')) {
  			let attachmentChatToAddModal =
  				`<li>
 						<a href="data:${res.message.file.contentType}; base64, ${bufferToBase64(res.message.file.data.data)}"
@@ -154,7 +154,7 @@
 						</a>
 				 </li>`
 
- 			$(`#attachmentssModal_${divId}`).find('ul.list-attachments').append(attachmentChatToAddModal)
+ 			$(`#attachmentsModal_${divId}`).find('ul.list-attachments').append(attachmentChatToAddModal)
  		}
  	})
  })
