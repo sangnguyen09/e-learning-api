@@ -139,6 +139,27 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
         ]
     },{_id:1,username:1, address:1, avatar:1}).exec()
   },
+  /**
+   *find all user to group chat
+   * @param {arr} friendIds
+   * @param {key search} keyword
+   */
+  findAllToAddGroupChat (friendIds, keyword) {
+    return this.find({
+        $and:[
+          {"_id":{$in: friendIds}} ,//$in nằm trong
+          { 'local.isActive': true},
+          {
+            $or:[
+              {'username' :{'$regex': new RegExp(keyword, 'i') }}, // i là ko phân biệt chữ hoa chữ thường
+              {'local.email' :{'$regex': new RegExp(keyword, 'i') }},
+              {'facebook.email' :{'$regex': new RegExp(keyword, 'i') }},
+              {'google.email' :{'$regex': new RegExp(keyword, 'i') }},
+            ]
+          }
+        ]
+    },{_id:1,username:1, address:1, avatar:1}).exec()
+  },
   getNormalUserDataById(id) {
     return this.findById(id,{_id:1,username:1, address:1, avatar:1}).exec()
   },

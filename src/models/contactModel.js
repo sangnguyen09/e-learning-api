@@ -189,6 +189,25 @@ ContactSchema.statics = {
 			"updatedAt": -1
 		}).limit(limit).exec()
 	},
+	getFriends(userId) { // danh sach ban be
+		return this.find({
+			$and: [{
+					'status': true
+				},
+				{
+					$or: [{
+							'userId': userId
+						},
+						{
+							'contactId': userId
+						},
+					]
+				}
+			]
+		}).sort({
+			"updatedAt": -1
+		}).exec()
+	},
 	getContactsSent(userId, limit) { // danh sachs minh gui yeu cau
 		return this.find({
 			$and: [{
