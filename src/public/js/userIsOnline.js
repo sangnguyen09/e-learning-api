@@ -1,6 +1,5 @@
 // step1:
 socket.on('server_send_listUsers_online', function(listUserIds){
-    console.log(listUserIds);
     listUserIds.forEach(userId =>{
         $(`.person[data-chat=${userId}]`).find('div.dot').addClass('online');
         $(`.person[data-chat=${userId}]`).find('div>img').addClass('avatar-online');

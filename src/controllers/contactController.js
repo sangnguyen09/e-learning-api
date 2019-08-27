@@ -30,6 +30,30 @@
 
    }
  }
+ let searchFriends = async (req, res) => {
+   let errorArr = [];
+   let validationErrors = validationResult(req);
+
+   if (!validationErrors.isEmpty()) {
+     let errors = Object.values(validationErrors.mapped()); // laay gia tri cua object gan vao mot cai mang
+     errors.map(item => {
+       errorArr = [...errorArr, item.msg]; // dung push vao mang
+     });
+     //Logging
+     return res.status(500).send(errorArr);
+   }
+
+   try {
+     let currentUserId = req.user._id;
+     let keyword = req.params.keyword // trungf voi router
+     let users = await contact.searchFriends(currentUserId, keyword)
+     return res.render('main/groupChat/sections/_searchFriend', {
+       users
+     })
+   } catch (error) {
+
+   }
+ }
  let addNew = async (req, res) => {
 
    try {
@@ -147,5 +171,7 @@
    readMoreContacts,
    readMoreContactsSent,
    readMoreContactsReceived,
-   removeContact
+   removeContact,
+   searchFriends
+
  }
