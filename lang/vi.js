@@ -8,7 +8,9 @@ export const transValidation ={
     update_address:'Địa chỉ giới hạn trong khoảng 3-30 kí tự',
     update_phone:'Số điện thoại Việt Nam 10 kí tự số.',
 	keyword_find_user: 'Chỉ cho phép kí tự chữ cái và số, khoảng trắng ',
-	message_text_emoji_incorrect:'Tin nhắn không hợp lệ. Đảm bảo 1 kí tự, tối đa 400 kí tự.'
+    message_text_emoji_incorrect:'Tin nhắn không hợp lệ. Đảm bảo 1 kí tự, tối đa 400 kí tự.',
+    chat_group_users :'Vui lòng chọn thêm bạn bè tối thiểu 2 người!',
+    chat_group_name: 'Vui lòng nhập tên nhóm từ 5 đến 30 kí tự'
 }
 export const transErrors ={
     account_in_use :"Email này đã được sử dụng",

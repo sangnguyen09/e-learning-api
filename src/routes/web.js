@@ -5,13 +5,15 @@ import {
 	user,
 	contact,
 	notification,
-	message
+	message,
+	chatGroup
 } from "./../controllers/index";
 import {
 	authValid,
 	userValid,
 	contactValid,
-	messageValid
+	messageValid,
+	chatGroupValid
 } from './../validation/index'
 import passport from 'passport'
 import initPassportLocal from '../controllers/passportController/local'
@@ -85,7 +87,9 @@ let initROutes = app => {
 
 	router.post('/message/add-new-text-emoji', auth.checkLoggedIn, messageValid.checkMessageLength,message.addNewTextEmoji )
 	router.post('/message/add-new-image', auth.checkLoggedIn,message.addNewImage)
-	router.post('/message/add-new-attachment', auth.checkLoggedIn,message.addNewAttachment)
+	router.post('/message/add-new-attachment', auth.checkLoggedIn, message.addNewAttachment)
+
+	router.post('/group-chat/add-new', auth.checkLoggedIn,chatGroupValid.chatGroupUsers, chatGroup.addNew)
 
 	return app.use("/", router);
 };

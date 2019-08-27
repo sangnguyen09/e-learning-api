@@ -8,7 +8,7 @@ import {
  * @param {*} io from socket.io lib
  */
 
-export const chatTextEmoji = (io) => {
+export const newGroupChat = (io) => {
 	let clients = {}
 
 	io.on('connection', (socket) => {
@@ -20,37 +20,20 @@ export const chatTextEmoji = (io) => {
 			clients = pushSocketIdToArray(clients, group._id, socket.id)
 
 		})
-		//khi Co cuoc tro chuyen moi thi no cung lang nghe de co the chat dc
 		socket.on('new_group_created', (data) => {
-			clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id)
-		})
+            clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id)
+            let response ={
+                groupChat : data.groupChat
+            }
+            data.groupChat.members.map(member =>{
+                if (clients[member.userId] && member.userId != currentUserId) {
+                    emitNotifyToArray(clients,member.userId,io,'res_new_group_created',response)
+                }
+            })
+		});
 		socket.on('member_received_group_chat', (data) => {
             clients = pushSocketIdToArray(clients, data.groupChatId, socket.id)
          
-		});
-
-		socket.on('chat_text_emoji', (data) => {
-			if (data.groupId) {
-				let response = {
-					currentGroupId: data.groupId,
-					message: data.message
-				}
-				if (clients[data.groupId]) {
-					emitNotifyToArray(clients, data.groupId, io, 'response_chat_text_emoji', response)
-				}
-			}
-			if (data.contactId) {
-				let response = {
-					currentUserId: socket.request.user._id,
-					message: data.message
-				}
-				if (clients[data.contactId]) {
-					emitNotifyToArray(clients, data.contactId, io, 'response_chat_text_emoji', response)
-				}
-			}
-
-
-
 		});
 
 		socket.on('disconnect', () => { // khi ng dung f5 hoac thoat trinh duyet thi xoa cai socket id do di

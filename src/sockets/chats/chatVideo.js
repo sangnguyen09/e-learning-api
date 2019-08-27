@@ -20,6 +20,14 @@ export const chatVideo = (io) => {
 			clients = pushSocketIdToArray(clients, group._id, socket.id)
 
 		})
+			//khi Co cuoc tro chuyen moi thi no cung lang nghe de co the chat dc
+			socket.on('new_group_created', (data) => {
+				clients = pushSocketIdToArray(clients, data.groupChat._id, socket.id)
+			})
+			socket.on('member_received_group_chat', (data) => {
+				clients = pushSocketIdToArray(clients, data.groupChatId, socket.id)
+			 
+			});
 		socket.on('caller_check_listener_isOnline', (data) => {
 		 
 			if (clients[data.listenerId]) {

@@ -10,6 +10,7 @@ import { chatImage } from './chats/chatImage';
 import { chatAttachment } from './chats/chatAttachment';
 import { chatVideo } from './chats/chatVideo';
 import { userIsOnline } from './status/userIsOnline';
+import { newGroupChat } from './group/newGroupChat';
 
 /**
  *
@@ -28,6 +29,7 @@ let initSockets = (io)=>{
     chatAttachment(io);
     chatVideo(io);
     userIsOnline(io);
+    newGroupChat(io);
     
 }
 module.exports = initSockets;
