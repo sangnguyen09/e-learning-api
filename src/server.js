@@ -68,7 +68,7 @@ initSockets(io)
 //     console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
 // })
 server.listen(process.env.PORT, () => {// heroku
-    console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
+   // console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
 })
 
 // import pem from 'pem';
