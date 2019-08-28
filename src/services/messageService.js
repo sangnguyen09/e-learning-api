@@ -17,7 +17,7 @@ import fsExtra from 'fs-extra'
 
 
 const LIMIT_CONVERSATIONS_TAKEN = 10
-const LIMIT_MESSAGE_TAKEN = 30
+const LIMIT_MESSAGE_TAKEN = 10
 export const getAllConversationItems = (currentUserId) => {
 	return new Promise(async (resolve, reject) => {
 		try {
@@ -312,7 +312,7 @@ export const addNewAttachment = (sender, receiverId, messageVal, isChatGroup) =>
 export const readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
 	return new Promise(async (resolve, reject) => {
 		try {
-			let contacts = await ContactModel.readMoreContacts(currentUserId,skipPersonal, LIMIT_CONVERSATIONS_TAKEN)
+			let contacts = await ContactModel.readMoreContacts(currentUserId, skipPersonal, LIMIT_CONVERSATIONS_TAKEN)
 
 			let userConversationsPromise = contacts.map(async contact => {
 				if (contact.contactId == currentUserId) { // so sanh 2 dau =,currentUserId la object
@@ -327,7 +327,7 @@ export const readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
 			})
 			let usersConversations = await Promise.all(userConversationsPromise)
 
-			let groupConversations = await ChatGroupModel.readMoreChatGroup(currentUserId,skipGroup, LIMIT_CONVERSATIONS_TAKEN)
+			let groupConversations = await ChatGroupModel.readMoreChatGroup(currentUserId, skipGroup, LIMIT_CONVERSATIONS_TAKEN)
 			let allConversations = usersConversations.concat(groupConversations);
 			allConversations = _.sortBy(allConversations, (item) => -item.updatedAt)
 
@@ -352,4 +352,31 @@ export const readMoreAllChat = (currentUserId, skipPersonal, skipGroup) => {
 		}
 	})
 }
-     
+
+/**
+ * 
+ * @param {string} currentUserId 
+ * @param {number} skipMessage 
+ * @param {string} targetId 
+ * @param {boolen} chatInGroup 
+ */
+export const readMore = (currentUserId, skipMessage, targetId, chatInGroup) => {
+	return new Promise(async (resolve, reject) => {
+		try {
+
+			// message in group
+			if (chatInGroup) {
+				let readMoreMessages = await MessageModel.readMoreMessagesInGroup(targetId, skipMessage, LIMIT_MESSAGE_TAKEN);
+				readMoreMessages = _.reverse(readMoreMessages)
+				return resolve(readMoreMessages)
+			}
+			// message in personal
+			let readMoreMessages = await MessageModel.readMoreMessagesInPersonal(currentUserId, targetId, skipMessage, LIMIT_MESSAGE_TAKEN);
+			readMoreMessages = _.reverse(readMoreMessages)
+			return resolve(readMoreMessages)
+
+		} catch (error) {
+			reject(error)
+		}
+	})
+}
