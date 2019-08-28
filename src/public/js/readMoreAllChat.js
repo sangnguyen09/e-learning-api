@@ -43,8 +43,11 @@ $(document).ready(function () {
 
 			socket.emit('check-status')
 
+            // Buoc 10
 			$('#load_more_all_chat').parent().css('display', 'block')
-			$('.lds-ripple').css('display', 'none')
+            $('.lds-ripple').css('display', 'none')
+            // Buoc 11
+            readMoreMessage()
 		})
 	})
 })

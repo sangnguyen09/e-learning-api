@@ -64,7 +64,10 @@ configSocketIo(io)
 // init all sockets
 initSockets(io)
 
-server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {
+// server.listen(process.env.APP_PORT, process.env.APP_HOST, () => {local
+//     console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
+// })
+server.listen(process.env.PORT, () => {// heroku
     console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
 })
 

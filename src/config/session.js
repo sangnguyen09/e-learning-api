@@ -7,7 +7,8 @@ let MongoStore = connectMongo(session);
  * bien nay la noi luu tru session vao mongodb
  */
 let sessionStore = new MongoStore({
-    url:`${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    //url:`${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
+    url:`mongodb+srv://sang:sang7817@awesome-chat-2ccbq.mongodb.net/test?retryWrites=true&w=majority`,
     autoReconnect: true,
     //autoRemove: 'native', tu dong remove sau khi het thoi gian song
 })

@@ -236,7 +236,10 @@ $(document).ready(function () {
 	//chuyển unicode thành hình ảnh
 	convertEmoji()
 	// active vao phan tu dau tien khi load trang web
+	if ($('ul.people').find('a').length) {
 	$('ul.people').find('a')[0].click()
+		
+	}
 
 	$('#video-chat-group').bind('click', function () {
 		alertify.notify('Không khả dụng với nhóm trò chuyện', 'warning', 7)
