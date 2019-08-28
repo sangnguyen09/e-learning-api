@@ -187,7 +187,7 @@ function callCreateChat() {
             </span>
         </div>
         <div class="content-chat">
-            <div class="chat" data-chat="${data.newChatGroup._id}">
+            <div class="chat chat-in-group" data-chat="${data.newChatGroup._id}">
                 
 
             </div>
@@ -370,7 +370,7 @@ $(document).ready(function() {
           </span>
       </div>
       <div class="content-chat">
-          <div class="chat" data-chat="${res.groupChat._id}">
+          <div class="chat chat-in-group" data-chat="${res.groupChat._id}">
               
 
           </div>

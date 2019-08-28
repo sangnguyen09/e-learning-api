@@ -1465,3 +1465,7 @@ text-decoration: none;
   position: absolute;
   bottom: 13.1%;
 }
+.message-loading {
+  display: block;
+  margin: 0 auto;
+}

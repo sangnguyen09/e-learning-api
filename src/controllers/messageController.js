@@ -195,3 +195,32 @@ export const readMoreAllChat = async (req, res) => {
 		return resizeBy.status(500).send(error)
 	}
 }
+export const readMore = async (req, res) => {
+	try {
+		// get skipnumber by query params
+		let skipMessage = +(req.query.skipMessage);
+		let targetId = req.query.targetId;
+		let chatInGroup = (req.query.chatInGroup ==='true');// convert to boolen
+		// get more item
+
+		let newMessage = await message.readMore(req.user._id, skipMessage, targetId, chatInGroup)
+
+		let dataRender = {
+			newMessage,
+			bufferToBase64,
+			user: req.user
+
+		}
+		let rightSideData = await renderFile('src/views/main/readMoreMessages/_rightSide.ejs', dataRender);
+		let imageModalData = await renderFile('src/views/main/readMoreMessages/_imageModal.ejs', dataRender);
+		let attactmentModalData = await renderFile('src/views/main/readMoreMessages/_attactmentModal.ejs', dataRender);
+
+		return res.status(200).send({
+			rightSideData,
+			imageModalData,
+			attactmentModalData
+		})
+	} catch (error) {
+		return resizeBy.status(500).send(error)
+	}
+}
