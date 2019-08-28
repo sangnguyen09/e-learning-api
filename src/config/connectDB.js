@@ -8,7 +8,7 @@ let connectDb = ()=>{
 
 
     // mongodb://localhost:27017/awesome_chat
-    let URI =`mongodb+srv://sang:sang7817@awesome-chat-2ccbq.mongodb.net/test?retryWrites=true&w=majority`
+    let URI =`mongodb://sang:sang7817@awesome-chat-shard-00-00-2ccbq.mongodb.net:27017,awesome-chat-shard-00-01-2ccbq.mongodb.net:27017,awesome-chat-shard-00-02-2ccbq.mongodb.net:27017/test?ssl=true&replicaSet=awesome-chat-shard-0&authSource=admin&retryWrites=true&w=majority`
     //let URI =`${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
     return  mongoose.connect(URI,{useMongoClient:true})
