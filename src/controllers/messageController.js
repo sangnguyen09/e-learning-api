@@ -13,7 +13,18 @@ import {
 	transSuccess
 } from '../../lang/vi';
 import fsExtra from 'fs-extra'
+import ejs from 'ejs'
+import {
+	lastItemOfArray,
+	convertTimestampToHumanTime,
+	bufferToBase64
+} from '../helpers/clientHelper';
+import {
+	promisify
+} from 'util' // tao promise
 
+// ,=make ejs func renderfile available with async await
+const renderFile = promisify(ejs.renderFile).bind(ejs)
 
 // xu ly tin nhan van ban va emoji
 export const addNewTextEmoji = async (req, res) => {
@@ -117,7 +128,7 @@ let attachmentMessageUploadFile = multer({
 	limits: {
 		fileSize: app.attachment_chat_limit_size
 	}
-}).single('my-attachment-chat') 
+}).single('my-attachment-chat')
 
 export const addNewAttachment = (req, res) => {
 	attachmentMessageUploadFile(req, res, async (err) => {
@@ -149,4 +160,38 @@ export const addNewAttachment = (req, res) => {
 		}
 	});
 
+}
+
+export const readMoreAllChat = async (req, res) => {
+	try {
+		// get skipnumber by query params
+		let skipPersonal = +(req.query.skipPersonal);
+		let skipGroup = +(req.query.skipGroup);
+
+		// get more item
+
+		let newAllConversations = await message.readMoreAllChat(req.user._id, skipPersonal, skipGroup)
+
+		let dataRender = {
+			newAllConversations,
+			lastItemOfArray,
+			convertTimestampToHumanTime,
+			bufferToBase64,
+			user: req.user
+
+		}
+		let leftSideData = await renderFile('src/views/main/readMoreConversations/_leftSide.ejs', dataRender);
+		let rightSideData = await renderFile('src/views/main/readMoreConversations/_rightSide.ejs', dataRender);
+		let imageModalData = await renderFile('src/views/main/readMoreConversations/_imageModal.ejs', dataRender);
+		let attactmentModalData = await renderFile('src/views/main/readMoreConversations/_attactmentModal.ejs', dataRender);
+
+		return res.status(200).send({
+			leftSideData,
+			rightSideData,
+			imageModalData,
+			attactmentModalData
+		})
+	} catch (error) {
+		return resizeBy.status(500).send(error)
+	}
 }
