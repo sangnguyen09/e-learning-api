@@ -13,6 +13,7 @@ let sessionStore = new MongoStore({
     //autoRemove: 'native', tu dong remove sau khi het thoi gian song
 })
 
+
 /**
  * Config session for app
  * @param  app from exactly express module
