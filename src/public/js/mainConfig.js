@@ -2,7 +2,7 @@
  * Created by https://trungquandev.com's author on 25/02/2018.
  */
 // const socket =io();
-var socket = io.connect('http://localhost:8017');
+var socket = io.connect('https://appchatnodedev.herokuapp.com');
 
 function nineScrollLeft() {
 	$('.left').niceScroll({
