@@ -8,10 +8,13 @@ let connectDb = ()=>{
 
 
     // mongodb://localhost:27017/awesome_chat
-    let URI =`mongodb://sang:sang7817@awesome-chat-shard-00-00-2ccbq.mongodb.net:27017/test`
+const uri = 'mongodb://sang:sang7817@awesome-chat-shard-00-00-2ccbq.mongodb.net:27017,awesome-chat-shard-00-01-2ccbq.mongodb.net:27017,awesome-chat-shard-00-02-2ccbq.mongodb.net:27017/awesome-chat?ssl=true&replicaSet=awesome-chat-shard-0&authSource=admin&retryWrites=true&w=majority',
+
     //let URI =`${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
-    return  mongoose.connect(URI,{useMongoClient:true})
+    return  mongoose.connect(uri,{useNewUrlParser:true})
+
+ 
 }
 
 module.exports = connectDb

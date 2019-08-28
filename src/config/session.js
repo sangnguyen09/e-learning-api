@@ -8,7 +8,7 @@ let MongoStore = connectMongo(session);
  */
 let sessionStore = new MongoStore({
     //url:`${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`,
-    url:`mongodb://sang:sang7817@awesome-chat-shard-00-00-2ccbq.mongodb.net:27017/test`,
+    url:'mongodb://sang:sang7817@awesome-chat-shard-00-00-2ccbq.mongodb.net:27017,awesome-chat-shard-00-01-2ccbq.mongodb.net:27017,awesome-chat-shard-00-02-2ccbq.mongodb.net:27017/awesome-chat?ssl=true&replicaSet=awesome-chat-shard-0&authSource=admin&retryWrites=true&w=majority',
     autoReconnect: true,
     //autoRemove: 'native', tu dong remove sau khi het thoi gian song
 })
