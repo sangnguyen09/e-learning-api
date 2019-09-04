@@ -71,44 +71,4 @@ server.listen(process.env.PORT, () => {// heroku
    // console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
 })
 
-// import pem from 'pem';
-// import https from 'https'
-// pem.createCertificate({
-//     days: 1,
-//     selfSigned: true
-// }, function (err, keys) {
-//     if (err) {
-//         throw err
-//     }
-//     let app = express();
-
-//     // connect to MongoDb
-//     ConnectDB();
-
-//     // sau khi ket noi dc mongo thi chay session
-//     configSession(app);
-
-//     // config view engine
-//     configViewEngine(app);
-
-//     // enable post data for request
-//     app.use(bodyParser.urlencoded({
-//         extended: true
-//     }));
-//     // Enable flash messages
-//     app.use(connectFlash())
-
-//     // config passport js
-//     app.use(passport.initialize());
-//     app.use(passport.session());
-
-//     // init routes
-//     initRoutes(app)
-
-//     https.createServer({
-//         key: keys.serviceKey,
-//         cert: keys.certificate
-//     }, app).listen(process.env.APP_PORT, process.env.APP_HOST, () => {
-//         console.log(`Hello, running at ${process.env.APP_HOST}:${process.env.APP_PORT}/`)
-//     })
-// })
+ 
