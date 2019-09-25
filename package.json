@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/server.js",
+    "start": "nodemon src/server.js --exec babel-node --presets es2015,stage-2",
     "postinstall": "bower cache clean && bower install"
   },
   "repository": {
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/sangnguyen09/Awesome-Chat#readme",
   "dependencies": {
+    "@hapi/joi": "^16.0.1",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bcrypt": "^3.0.6",
@@ -28,12 +29,15 @@
     "connect-flash": "^0.1.1",
     "connect-mongo": "^2.0.1",
     "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.1.0",
     "ejs": "^2.5.7",
     "express": "^4.17.1",
     "express-ejs-extend": "0.0.1",
     "express-session": "^1.15.6",
     "express-validator": "^4.3.0",
     "fs-extra": "^8.1.0",
+    "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mongoose": "^4.13.9",
@@ -42,6 +46,7 @@
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-google-oauth": "^2.0.0",
+    "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport.socketio": "^3.7.0",
     "random-id": "^1.0.3",
@@ -50,6 +55,9 @@
     "uuid": "^3.3.2"
   },
   "devDependencies": {
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.19.2",
     "pem": "^1.13.2"
   }
 }

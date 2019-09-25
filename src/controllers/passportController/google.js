@@ -3,16 +3,17 @@ import passportGoogle from "passport-google-oauth"; // kiêm tra đang nhập
 import UserModel from '../../models/userModel'
 import ChatGroupModel from '../../models/chatGroupModel'
 import { transErrors, transSuccess } from "../../../lang/vi";
+import { env } from "../../config/env";
 
 let GoogleStratery = passportGoogle.OAuth2Strategy;
-let ggAppId = process.env.GG_APP_ID
-let ggAppSecret = process.env.GG_APP_SECRET
-let ggAppCallback = process.env.GG_APP_CALLBACK_URL
+let ggAppId =env.ggAppId
+let ggAppSecret =env.ggAppSecret
+let ggAppCallback =env.ggAppCallbackUrl
 /**
  * Valid user account type: Google
  */
 
- let initPassportGoogle =() =>{
+export const initPassportGoogle =() =>{
      passport.use(new GoogleStratery({
         clientID: ggAppId,
         clientSecret:ggAppSecret,
@@ -63,4 +64,3 @@ let ggAppCallback = process.env.GG_APP_CALLBACK_URL
           
       })
  }
- module.exports = initPassportGoogle;

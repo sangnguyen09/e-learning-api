@@ -40,7 +40,7 @@ function callLogOut() {
              return 
          }
          if (fileData.size > limit) {
-             alertify.notify("Ảnh upalod tối đa cho phép là 1MB", "error",7)
+             alertify.notify("Ảnh upalod tối đa cho phép là 1MB", "error",7) 
              $(this).val(null);
              return 
          }

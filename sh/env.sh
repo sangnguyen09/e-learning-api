@@ -6,9 +6,9 @@
 # export DB_USERNAME=''
 # export DB_PASSWORD=''
 
-# # config app environment variable
-# export APP_HOST=localhost
-# export APP_PORT=8017
+# config app environment variable
+export APP_HOST=localhost
+export APP_PORT=8017
 
 #config Session 
 export SESSION_KEY=sangnguyen

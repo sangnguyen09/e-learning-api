@@ -3,16 +3,17 @@ import passportFacebook from "passport-facebook"; // kiêm tra đang nhập
 import UserModel from '../../models/userModel'
 import ChatGroupModel from '../../models/chatGroupModel'
 import { transErrors, transSuccess } from "../../../lang/vi";
+import { env } from "../../config/env";
 
 let facebookStratery = passportFacebook.Strategy;
-let fbAppId = process.env.FB_APP_ID
-let fbAppSecret = process.env.FB_APP_SECRET
-let fbAppCallback = process.env.FB_APP_CALLBACK_URL
+let fbAppId =env.fbAppId
+let fbAppSecret =env.fbAppSecret
+let fbAppCallback =env.fbAppCallbackUrl
 /**
  * Valid user account type: facebook
  */
 
- let initPassportFacebook =() =>{
+export const initPassportFacebook =() =>{
      passport.use(new facebookStratery({
         clientID: fbAppId,
         clientSecret:fbAppSecret,
@@ -62,4 +63,3 @@ let fbAppCallback = process.env.FB_APP_CALLBACK_URL
           
       })
  }
- module.exports = initPassportFacebook;

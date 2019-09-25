@@ -1,24 +1,18 @@
 import mongoose from "mongoose";
-import {
-  verify
-} from "crypto";
 import bcrypt from 'bcrypt'
 
 let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
-  username: String,
-  gender: {
-    type: String,
-    default: "male"
-  },
+  userName: {type: String, required : true},
+  fullName: {type: String, required : true},
   phone: {
     type: String,
-    default: null
+    default: null,
   },
   address: {
     type: String,
-    default: null
+    default: null,
   },
   avatar: {
     type: String,
@@ -28,33 +22,35 @@ let UserSchema = new Schema({
     type: String,
     default: "user"
   },
+  email: {
+    type: String,
+   // trim là ko có khoảng trắng
+    trim: true,
+    required:true
+  },
   local: {
-    email: {
-      type: String,
-      trim: true
-    },
-    password: String,
-    isActive: {
-      type: Boolean,
-      default: false
-    },
+    password: {type: String, required : true},
     verifyToken: String
+  },
+  forgotPasswordToken:{
+    type:String,
+    default: null,
+  },
+  isActive: {
+    type: Boolean,
+    default: false
   },
   facebook: {
     uid: String,
     token: String,
-    email: {
-      type: String,
-      trim: true
-    }
   },
   google: {
     uid: String,
     token: String,
-    email: {
-      type: String,
-      trim: true
-    } // trim là ko có khoảng trắng
+  },
+  refreshToken:{
+    type: String,
+    default: null
   },
   createdAt: {
     type: Number,
@@ -76,11 +72,36 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
   findByEmail(email) {
     // tra ve Promise
     return this.findOne({
-      "local.email": email
+      "email": email
     }).exec(); // exec thuc thi
   },
+  findUserByJWT(id) {
+    // tra ve Promise
+    return this.findById(id,{'local.password':0}).exec(); // exec thuc thi
+  },
+  
   removeById(id) {
     return this.findByIdAndRemove(id).exec()
+  },
+  checkRefreshTokenByUser(id, refreshToken) {
+    // tra ve Promise
+    return this.findOne({
+      $and:[
+         {"_id":id},
+         {"refreshToken":refreshToken}
+      ]
+    },{'local.password':0}).exec(); // exec thuc thi
+  },
+  saveForgotPasswordToken(id,token) { // lưu lại mã token để kiểm tra khi người dùng muốn lấy lại mật khẩu  
+    return this.findByIdAndUpdate(id, {'forgotPasswordToken':token}).exec()
+  },
+  findForgotPasswordToken(token) {// tim kiếm xem có tồn tại token mà người dùng gửi lên khi lấy lại mật khẩu
+    return this.findOne({
+      "forgotPasswordToken": token
+    }).exec();
+  },
+  saveRefreshToken(id,refreshToken) { // lưu lại mã refreshToken để sau này tạo lại mã Token  
+    return this.findByIdAndUpdate(id, {'refreshToken':refreshToken}).exec()
   },
   findByToken(token) {
     return this.findOne({
@@ -91,7 +112,7 @@ UserSchema.statics = { // nó chỉ nằm ở phạm vi Schema để giúp chún
     return this.findOneAndUpdate({
       'local.verifyToken': token
     }, {
-      'local.isActive': true,
+      'isActive': true,
       'local.verifyToken': null
     }).exec()
   },

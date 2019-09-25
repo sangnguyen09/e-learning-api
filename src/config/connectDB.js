@@ -9,7 +9,7 @@ let connectDb = ()=>{
     // mongodb://localhost:27017/awesome_chat
     //let URI =`${process.env.DB_CONNECTION}://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
 
-    return  mongoose.connect('mongodb://sang:sang7817@elearning-shard-00-00-fuuar.gcp.mongodb.net:27017,elearning-shard-00-01-fuuar.gcp.mongodb.net:27017,elearning-shard-00-02-fuuar.gcp.mongodb.net:27017/test?ssl=true&replicaSet=Elearning-shard-0&authSource=admin&retryWrites=true&w=majority', {useMongoClient:true}); 
+    return  mongoose.connect('mongodb://sang:sang7817@elearning-shard-00-00-fuuar.gcp.mongodb.net:27017,elearning-shard-00-01-fuuar.gcp.mongodb.net:27017,elearning-shard-00-02-fuuar.gcp.mongodb.net:27017/api-e-learning?ssl=true&replicaSet=Elearning-shard-0&authSource=admin&retryWrites=true&w=majority', {useMongoClient:true}); 
   // mongoose.connect(URI,{useNewUrlParser:true})
 }
 
